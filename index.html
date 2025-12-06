@@ -20,7 +20,6 @@
             --transition: all 0.3s ease;
         }
         
-        /* Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -720,13 +719,13 @@
         <div class="container nav-container">
             <a href="#" class="logo">Elite<span>Fit</span> Gym</a>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#classes">Classes</a></li>
-                <li><a href="#membership">Membership</a></li>
-                <li><a href="#trainers">Trainers</a></li>
-                <li><a href="#schedule">Schedule</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="trainers.html">Trainers</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <button class="mobile-menu">
                 <i class="fas fa-bars"></i>
@@ -864,10 +863,297 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Trainers Section -->
+    <section class="trainers" id="trainers">
+        <div class="container">
+            <h2>Meet Our Expert Trainers</h2>
+            <div class="classes-grid">
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    </div>
+                    <div class="class-content">
+                        <h3>Sarah Johnson</h3>
+                        <p><strong>Yoga & Pilates Specialist</strong></p>
+                        <p>10+ years of experience helping clients achieve balance and flexibility.</p>
+                        <div class="class-meta">
+                            <span><i class="fas fa-certificate"></i> Certified</span>
+                            <span><i class="fas fa-star"></i> 4.9/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1567598508481-65985588e295?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    </div>
+                    <div class="class-content">
+                        <h3>Mike Thompson</h3>
+                        <p><strong>Strength & Conditioning Coach</strong></p>
+                        <p>Former athlete specializing in CrossFit and functional training.</p>
+                        <div class="class-meta">
+                            <span><i class="fas fa-certificate"></i> Certified</span>
+                            <span><i class="fas fa-star"></i> 5.0/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    </div>
+                    <div class="class-content">
+                        <h3>Emily Chen</h3>
+                        <p><strong>Cardio & HIIT Expert</strong></p>
+                        <p>Energetic trainer focused on high-intensity workouts and weight loss.</p>
+                        <div class="class-meta">
+                            <span><i class="fas fa-certificate"></i> Certified</span>
+                            <span><i class="fas fa-star"></i> 4.8/5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <h2>Weekly Class Schedule</h2>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: var(--shadow); border-radius: var(--radius);">
+                    <thead>
+                        <tr style="background: var(--primary); color: white;">
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Time</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Monday</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Tuesday</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Wednesday</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Thursday</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Friday</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Saturday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">6:00 AM</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Yoga<br><small>Sarah</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">CrossFit<br><small>Mike</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Yoga<br><small>Sarah</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">CrossFit<br><small>Mike</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">HIIT<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Yoga<br><small>Sarah</small></td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">9:00 AM</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spinning<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Yoga<br><small>Sarah</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spinning<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Yoga<br><small>Sarah</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">CrossFit<br><small>Mike</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spinning<br><small>Emily</small></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">5:00 PM</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">CrossFit<br><small>Mike</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">HIIT<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">CrossFit<br><small>Mike</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">HIIT<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Yoga<br><small>Sarah</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">CrossFit<br><small>Mike</small></td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">7:00 PM</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">HIIT<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spinning<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">HIIT<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spinning<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spinning<br><small>Emily</small></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                <div>
+                    <h3>Contact Information</h3>
+                    <div style="margin-top: 2rem;">
+                        <div style="display: flex; align-items: start; margin-bottom: 1.5rem;">
+                            <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Address</h4>
+                                <p>123 Fitness Street, Health City, HC 12345</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; margin-bottom: 1.5rem;">
+                            <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>(555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; margin-bottom: 1.5rem;">
+                            <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>info@elitefitgym.com</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start;">
+                            <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4>Hours</h4>
+                                <p>Mon-Sun: 5:00 AM - 11:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Send Us a Message</h3>
+                    <form style="margin-top: 2rem;">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: var(--radius); font-size: 1rem; font-family: inherit; resize: vertical;" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section style="background: var(--primary); color: var(--white); padding: 60px 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: center;">
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">5000+</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Active Members</p>
+                </div>
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">15+</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Expert Trainers</p>
+                </div>
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">50+</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Classes Weekly</p>
+                </div>
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">10</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Years Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section style="padding: 80px 0; background: var(--white);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
+                <div>
+                    <h2 style="text-align: left; margin-bottom: 1.5rem;">Welcome to EliteFit Gym</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">At EliteFit, we believe fitness is more than just a workout—it's a lifestyle. Our state-of-the-art facility combines cutting-edge equipment with expert guidance to help you achieve your goals.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">Whether you're a beginner or a seasoned athlete, our community welcomes you. Join us and discover what your body is truly capable of.</p>
+                    <a href="membership.html" class="btn">Start Your Journey</a>
+                </div>
+                <div style="background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; height: 400px; border-radius: var(--radius); box-shadow: var(--shadow);"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="padding: 80px 0; background: var(--light);">
+        <div class="container">
+            <h2>What Our Members Say</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div style="background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; margin-bottom: 1.5rem;">"EliteFit has completely transformed my fitness journey. The trainers are knowledgeable, the equipment is top-notch, and the atmosphere is incredibly motivating!"</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">JD</div>
+                        <div>
+                            <h4 style="margin: 0;">John Davis</h4>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Member since 2022</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; margin-bottom: 1.5rem;">"Best gym I've ever joined! The variety of classes keeps things interesting, and the 24/7 access fits perfectly with my busy schedule."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SM</div>
+                        <div>
+                            <h4 style="margin: 0;">Sarah Martinez</h4>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Member since 2021</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; margin-bottom: 1.5rem;">"The community here is amazing. Everyone is supportive and encouraging. I've made great progress and even better friends!"</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">MR</div>
+                        <div>
+                            <h4 style="margin: 0;">Michael Roberts</h4>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Member since 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--white); padding: 100px 0; text-align: center;">
+        <div class="container">
+            <h2 style="color: var(--white); font-size: 2.8rem; margin-bottom: 1rem;">Ready to Transform Your Life?</h2>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 2.5rem; opacity: 0.9;">Join thousands of members who have already started their fitness journey with EliteFit Gym.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="membership.html" class="btn" style="font-size: 1.1rem; padding: 15px 40px;">Get Started Today</a>
+                <a href="contact.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 15px 40px;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer --></h2>p>i>div></p></i>section>div></div>h2></div>""
     <footer>
         <div class="container">
-            <div class="footer-content">
+            <div class="footer-content">new </div>
                 <div class="footer-column">
                     <h3>EliteFit Gym</h3>
                     <p>Transform your body and mind with our state-of-the-art facilities, expert trainers, and supportive community.</p>

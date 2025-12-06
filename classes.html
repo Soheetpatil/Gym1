@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes | EliteFit Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #333333;
+            --accent: #555555;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --text: #222222;
+            --radius: 8px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--white);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #888;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: #ccc;
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 150px 0 80px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .class-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+        
+        .class-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .class-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .class-content {
+            padding: 1.5rem;
+        }
+        
+        .class-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Elite<span>Fit</span> Gym</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="trainers.html">Trainers</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Fitness Classes</h1>
+            <p>Choose from a variety of classes designed to meet your fitness goals</p>
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="classes-grid">
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">YOGA</div>
+                    <div class="class-content">
+                        <h3>Yoga & Mindfulness</h3>
+                        <p>Improve flexibility, balance, and mental clarity with our guided yoga sessions.</p>
+                        <div class="class-meta">
+                            <span><i class="far fa-clock"></i> 60 min</span>
+                            <span><i class="fas fa-user-friends"></i> All Levels</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">CROSSFIT</div>
+                    <div class="class-content">
+                        <h3>CrossFit Training</h3>
+                        <p>High-intensity functional movements to build strength and endurance.</p>
+                        <div class="class-meta">
+                            <span><i class="far fa-clock"></i> 45 min</span>
+                            <span><i class="fas fa-user-friends"></i> Advanced</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1517344884509-a0c97ec11bcc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">SPINNING</div>
+                    <div class="class-content">
+                        <h3>Spin Cycling</h3>
+                        <p>Cardio-intensive cycling classes that burn calories and boost stamina.</p>
+                        <div class="class-meta">
+                            <span><i class="far fa-clock"></i> 50 min</span>
+                            <span><i class="fas fa-user-friends"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">HIIT</div>
+                    <div class="class-content">
+                        <h3>HIIT Training</h3>
+                        <p>High-intensity interval training for maximum calorie burn and fitness gains.</p>
+                        <div class="class-meta">
+                            <span><i class="far fa-clock"></i> 30 min</span>
+                            <span><i class="fas fa-user-friends"></i> All Levels</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">PILATES</div>
+                    <div class="class-content">
+                        <h3>Pilates</h3>
+                        <p>Core-focused exercises to improve posture, flexibility, and body awareness.</p>
+                        <div class="class-meta">
+                            <span><i class="far fa-clock"></i> 55 min</span>
+                            <span><i class="fas fa-user-friends"></i> Beginner</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img" style="background-image: url('https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">BOXING</div>
+                    <div class="class-content">
+                        <h3>Boxing Fitness</h3>
+                        <p>Learn boxing techniques while getting an intense full-body workout.</p>
+                        <div class="class-meta">
+                            <span><i class="far fa-clock"></i> 45 min</span>
+                            <span><i class="fas fa-user-friends"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 EliteFit Gym. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
