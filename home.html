@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteFit Gym | Black & White Excellence</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="home.html" class="logo">Elite<span>Fit</span> Gym</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="trainers.html">Trainers</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#" class="logout-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <button class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Welcome Back to EliteFit!</h1>
+            <p>Continue your fitness journey with our state-of-the-art equipment, expert trainers, and motivating atmosphere.</p>
+            <div class="hero-buttons">
+                <a href="membership.html" class="btn">Upgrade Plan</a>
+                <a href="classes.html" class="btn btn-secondary">Book Classes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section style="background: var(--primary); color: var(--white); padding: 60px 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; text-align: center;">
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">5000+</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Active Members</p>
+                </div>
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">15+</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Expert Trainers</p>
+                </div>
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">50+</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Classes Weekly</p>
+                </div>
+                <div>
+                    <h2 style="color: var(--white); font-size: 3rem; margin-bottom: 0.5rem;">10</h2>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Years Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section style="padding: 80px 0; background: var(--white);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
+                <div>
+                    <h2 style="text-align: left; margin-bottom: 1.5rem;">Welcome to EliteFit Gym</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">At EliteFit, we believe fitness is more than just a workout—it's a lifestyle. Our state-of-the-art facility combines cutting-edge equipment with expert guidance to help you achieve your goals.</p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">Whether you're a beginner or a seasoned athlete, our community welcomes you. Join us and discover what your body is truly capable of.</p>
+                    <a href="membership.html" class="btn">Start Your Journey</a>
+                </div>
+                <div style="background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; height: 400px; border-radius: var(--radius); box-shadow: var(--shadow);"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="padding: 80px 0; background: var(--light);">
+        <div class="container">
+            <h2>What Our Members Say</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div style="background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; margin-bottom: 1.5rem;">"EliteFit has completely transformed my fitness journey. The trainers are knowledgeable, the equipment is top-notch, and the atmosphere is incredibly motivating!"</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">JD</div>
+                        <div>
+                            <h4 style="margin: 0;">John Davis</h4>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Member since 2022</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; margin-bottom: 1.5rem;">"Best gym I've ever joined! The variety of classes keeps things interesting, and the 24/7 access fits perfectly with my busy schedule."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SM</div>
+                        <div>
+                            <h4 style="margin: 0;">Sarah Martinez</h4>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Member since 2021</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem; color: var(--primary);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; margin-bottom: 1.5rem;">"The community here is amazing. Everyone is supportive and encouraging. I've made great progress and even better friends!"</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">MR</div>
+                        <div>
+                            <h4 style="margin: 0;">Michael Roberts</h4>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Member since 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--white); padding: 100px 0; text-align: center;">
+        <div class="container">
+            <h2 style="color: var(--white); font-size: 2.8rem; margin-bottom: 1rem;">Ready to Transform Your Life?</h2>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 2.5rem; opacity: 0.9;">Continue your fitness journey with EliteFit Gym.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="membership.html" class="btn" style="font-size: 1.1rem; padding: 15px 40px;">Upgrade Membership</a>
+                <a href="contact.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 15px 40px;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EliteFit Gym</h3>
+                    <p>Transform your body and mind with our state-of-the-art facilities, expert trainers, and supportive community.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="trainers.html">Trainers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, Health City</li>
+                        <li><i class="fas fa-phone-alt"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@elitefitgym.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Sun: 5:00 AM - 11:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 EliteFit Gym. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            alert('You have been logged out successfully!');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
