@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     try {
         // Wait for EliteFitDB to be available
-        if (!window.EliteFitDB) {
-            throw new Error('EliteFitDB not loaded');
+        if (!window.DemoCloudDB) {
+            throw new Error('DemoCloudDB not loaded');
         }
         
         // Initialize database with retry logic
@@ -25,8 +25,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Load registered users count
         await loadRegisteredUsersCount();
         
+        // Debug: Show available users
+        const users = await window.DemoCloudDB.getAllUsers();
+        console.log('Available users for login:', users.map(u => ({ email: u.email, name: u.fullName })));
+        
         // Clean expired sessions
-        await window.EliteFitDB.cleanExpiredSessions();
+        await window.DemoCloudDB.showCrossDeviceStatus();
         
         // Hide status after 2 seconds
         setTimeout(() => hideDatabaseStatus(), 2000);
@@ -38,14 +42,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Retry after 2 seconds
         setTimeout(async () => {
             try {
-                if (window.EliteFitDB) {
-                    await window.EliteFitDB.init();
+                if (window.DemoCloudDB) {
+                    await window.DemoCloudDB.init();
                     dbReady = true;
                     showDatabaseStatus('Database ready', 'success');
                     await loadRegisteredUsersCount();
                     setTimeout(() => hideDatabaseStatus(), 2000);
                 } else {
-                    throw new Error('EliteFitDB still not available');
+                    throw new Error('DemoCloudDB still not available');
                 }
             } catch (retryError) {
                 console.error('Database retry failed:', retryError);
@@ -65,11 +69,11 @@ async function initializeDatabase() {
         throw new Error('IndexedDB not supported in this browser');
     }
     
-    if (!window.EliteFitDB) {
-        throw new Error('EliteFitDB class not available');
+    if (!window.DemoCloudDB) {
+        throw new Error('DemoCloudDB class not available');
     }
     
-    return await window.EliteFitDB.init();
+    return await window.DemoCloudDB.init();
 }
 
 // Show database status with animations
@@ -243,29 +247,24 @@ function setupLoginForm() {
             
             try {
                 // Authenticate user
-                const result = await window.EliteFitDB.authenticateUser(email, password);
+                console.log('Attempting login with:', email);
+                const result = await window.DemoCloudDB.authenticateUser(email, password);
+                console.log('Authentication result:', result);
                 
                 if (result.success) {
-                    // Create session
-                    const sessionResult = await window.EliteFitDB.createSession(result.user.id);
+                    // Store user data (no session creation needed for demo)
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', result.user.email);
+                    localStorage.setItem('userName', result.user.fullName);
+                    localStorage.setItem('userId', result.user.id);
+                    localStorage.setItem('membershipType', result.user.membershipType);
                     
-                    if (sessionResult.success) {
-                        // Store user data
-                        localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('userEmail', result.user.email);
-                        localStorage.setItem('userName', result.user.fullName);
-                        localStorage.setItem('userId', result.user.id);
-                        localStorage.setItem('membershipType', result.user.membershipType);
-                        
-                        showDatabaseStatus(`Welcome back, ${result.user.fullName}!`, 'success');
-                        
-                        // Redirect after short delay
-                        setTimeout(() => {
-                            window.location.href = 'home.html';
-                        }, 1000);
-                    } else {
-                        throw new Error('Session creation failed');
-                    }
+                    showDatabaseStatus(`Welcome back, ${result.user.fullName}!`, 'success');
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1000);
                 } else {
                     alert(result.message || 'Login failed. Please check your credentials.');
                 }
@@ -333,7 +332,7 @@ async function displayRegisteredUsers() {
     const usersList = document.getElementById('usersList');
     
     try {
-        const users = await window.EliteFitDB.getAllUsers();
+        const users = await window.DemoCloudDB.getAllUsers();
         
         if (users.length === 0) {
             usersList.innerHTML = '<p style="margin: 0; font-size: 0.85rem; color: #666; text-align: center;">No registered users yet. <a href="signup.html" style="color: var(--primary);">Sign up</a> to create an account!</p>';
@@ -496,7 +495,7 @@ async function loadRegisteredUsersCount() {
     if (!dbReady) return;
     
     try {
-        const users = await window.EliteFitDB.getAllUsers();
+        const users = await window.DemoCloudDB.getAllUsers();
         const showUsersBtn = document.getElementById('showUsersBtn');
         if (showUsersBtn && users.length > 0) {
             showUsersBtn.innerHTML = `<i class="fas fa-users"></i> Show Registered Users (${users.length})`;

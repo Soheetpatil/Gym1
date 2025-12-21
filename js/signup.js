@@ -5,12 +5,12 @@ let dbReady = false;
 // Initialize database when page loads
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Wait for EliteFitDB to be available
-        if (!window.EliteFitDB) {
-            throw new Error('EliteFitDB not loaded');
+        // Wait for DemoCloudDB to be available
+        if (!window.DemoCloudDB) {
+            throw new Error('DemoCloudDB not loaded');
         }
         
-        await window.EliteFitDB.init();
+        await window.DemoCloudDB.init();
         dbReady = true;
         console.log('Database initialized for signup');
     } catch (error) {
@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Retry after a short delay
         setTimeout(async () => {
             try {
-                if (window.EliteFitDB) {
-                    await window.EliteFitDB.init();
+                if (window.DemoCloudDB) {
+                    await window.DemoCloudDB.init();
                     dbReady = true;
                     console.log('Database initialized for signup (retry successful)');
                 } else {
-                    console.error('EliteFitDB still not available after retry');
+                    console.error('DemoCloudDB still not available after retry');
                 }
             } catch (retryError) {
                 console.error('Database retry failed:', retryError);
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             try {
                 // Register user
-                const result = await window.EliteFitDB.registerUser({
+                const result = await window.DemoCloudDB.registerUser({
                     fullName: fullName.trim(),
                     email: email.trim(),
                     password: password
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (email && isValidEmail(email) && dbReady) {
                 // Check if email already exists
                 try {
-                    const users = await window.EliteFitDB.getAllUsers();
+                    const users = await window.DemoCloudDB.getAllUsers();
                     const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
                     
                     if (existingUser) {
@@ -268,7 +268,7 @@ function showPasswordStrength(strength) {
     passwordGroup.appendChild(indicator);
 }
 
-// Show email error
+// Show email error with animation
 function showEmailError(message) {
     hideEmailError(); // Remove existing error
     
@@ -282,8 +282,30 @@ function showEmailError(message) {
         display: flex;
         align-items: center;
         gap: 0.25rem;
+        opacity: 0;
+        transform: translateY(-10px);
+        animation: errorSlideIn 0.3s ease-out forwards;
     `;
-    errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+    errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle" style="animation: shake 0.5s ease-in-out;"></i> ${message}`;
+    
+    // Add shake animation for icon
+    if (!document.getElementById('email-error-animations')) {
+        const errorStyles = document.createElement('style');
+        errorStyles.id = 'email-error-animations';
+        errorStyles.textContent = `
+            @keyframes errorSlideIn {
+                0% { opacity: 0; transform: translateY(-10px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+            
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-2px); }
+                75% { transform: translateX(2px); }
+            }
+        `;
+        document.head.appendChild(errorStyles);
+    }
     
     emailInput.parentNode.appendChild(errorDiv);
 }

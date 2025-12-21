@@ -209,12 +209,124 @@
             }
         });
 
-        // Logout function
+        // Logout function with animated message
         function logout() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('userEmail');
-            alert('You have been logged out successfully!');
-            window.location.href = 'login.html';
+            // Show animated logout message
+            showLogoutMessage();
+            
+            // Clear session data after animation starts
+            setTimeout(() => {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('membershipType');
+                localStorage.removeItem('eliteFitSession');
+                
+                // Redirect after message animation
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }, 500);
+        }
+
+        // Show animated logout success message
+        function showLogoutMessage() {
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'logout-message';
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 32px 40px;
+                border-radius: 20px;
+                z-index: 10001;
+                text-align: center;
+                box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+                backdrop-filter: blur(15px);
+                border: 2px solid rgba(255,255,255,0.2);
+                min-width: 350px;
+                max-width: 90vw;
+                animation: logoutBounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            `;
+            
+            messageDiv.innerHTML = `
+                <div style="margin-bottom: 16px;">
+                    <i class="fas fa-sign-out-alt" style="font-size: 3rem; color: #fff; animation: logoutIconSpin 1s ease-in-out;"></i>
+                </div>
+                <div style="font-size: 1.4rem; font-weight: bold; margin-bottom: 8px;">
+                    👋 Goodbye!
+                </div>
+                <div style="font-size: 1rem; opacity: 0.9; line-height: 1.4;">
+                    You have been logged out successfully!<br>
+                    <small style="opacity: 0.7;">Redirecting to login page...</small>
+                </div>
+                <div style="margin-top: 20px;">
+                    <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; margin: 0 auto; overflow: hidden;">
+                        <div style="width: 0; height: 100%; background: linear-gradient(90deg, #fff, #f0f0f0); border-radius: 2px; animation: progressBar 2s ease-in-out forwards;"></div>
+                    </div>
+                </div>
+            `;
+            
+            // Add logout animation styles
+            if (!document.getElementById('logout-animations')) {
+                const animationStyles = document.createElement('style');
+                animationStyles.id = 'logout-animations';
+                animationStyles.textContent = `
+                    @keyframes logoutBounceIn {
+                        0% { 
+                            transform: translate(-50%, -50%) scale(0) rotate(-180deg); 
+                            opacity: 0; 
+                        }
+                        50% { 
+                            transform: translate(-50%, -50%) scale(1.1) rotate(10deg); 
+                            opacity: 1; 
+                        }
+                        100% { 
+                            transform: translate(-50%, -50%) scale(1) rotate(0deg); 
+                            opacity: 1; 
+                        }
+                    }
+                    
+                    @keyframes logoutIconSpin {
+                        0% { transform: rotate(0deg) scale(1); }
+                        50% { transform: rotate(180deg) scale(1.2); }
+                        100% { transform: rotate(360deg) scale(1); }
+                    }
+                    
+                    @keyframes progressBar {
+                        0% { width: 0%; }
+                        100% { width: 100%; }
+                    }
+                    
+                    @keyframes logoutFadeOut {
+                        0% { 
+                            transform: translate(-50%, -50%) scale(1); 
+                            opacity: 1; 
+                        }
+                        100% { 
+                            transform: translate(-50%, -50%) scale(0.8); 
+                            opacity: 0; 
+                        }
+                    }
+                `;
+                document.head.appendChild(animationStyles);
+            }
+            
+            document.body.appendChild(messageDiv);
+            
+            // Auto-hide after delay
+            setTimeout(() => {
+                messageDiv.style.animation = 'logoutFadeOut 0.5s ease-in-out forwards';
+                setTimeout(() => {
+                    if (document.body.contains(messageDiv)) {
+                        document.body.removeChild(messageDiv);
+                    }
+                }, 500);
+            }, 2000);
         }
     </script>
 </body>
