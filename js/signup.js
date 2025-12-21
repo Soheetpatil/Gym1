@@ -1,12 +1,29 @@
 // Signup Page JavaScript
 
-document.addEventListener('DOMContentLoaded', function() {
+let dbReady = false;
+
+// Initialize database when page loads
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        await EliteFitDB.init();
+        dbReady = true;
+        console.log('Database initialized for signup');
+    } catch (error) {
+        console.error('Database initialization failed:', error);
+        alert('Database initialization failed. Registration may not work properly.');
+    }
+
     const signupForm = document.getElementById('signupForm');
     
     // Handle form submission
     if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
+        signupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            if (!dbReady) {
+                alert('Database not ready. Please wait and try again.');
+                return;
+            }
             
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
@@ -17,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Validation
             if (!fullName || !email || !password || !confirmPassword) {
                 alert('Please fill in all fields');
+                return;
+            }
+            
+            if (fullName.length < 2) {
+                alert('Full name must be at least 2 characters long');
                 return;
             }
             
@@ -40,50 +62,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Simulate signup process
+            // Show loading state
             const signupBtn = document.querySelector('.login-btn');
             const originalText = signupBtn.innerHTML;
             
             signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
             signupBtn.disabled = true;
             
-            // Simulate API call
-            setTimeout(() => {
-                // Store user credentials in localStorage (in real app, send to server)
-                const storedUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            try {
+                // Register user
+                const result = await EliteFitDB.registerUser({
+                    fullName: fullName.trim(),
+                    email: email.trim(),
+                    password: password
+                });
                 
-                // Check if email already exists
-                const existingUser = storedUsers.find(u => u.email === email);
-                if (existingUser) {
-                    alert('Email already registered. Please use a different email or login with existing account.');
-                    signupBtn.innerHTML = originalText;
-                    signupBtn.disabled = false;
-                    return;
+                if (result.success) {
+                    alert(`Account created successfully for ${fullName}! You can now login with your credentials.`);
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                } else {
+                    alert(result.message || 'Registration failed. Please try again.');
                 }
-                
-                // Add new user
-                const newUser = {
-                    fullName,
-                    email,
-                    password,
-                    registrationDate: new Date().toISOString()
-                };
-                
-                storedUsers.push(newUser);
-                localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-                
-                console.log('Signup successful:', { fullName, email });
-                
-                // Simulate successful signup
-                alert(`Account created successfully for ${fullName}! You can now login with your credentials.`);
-                
+            } catch (error) {
+                console.error('Registration error:', error);
+                if (error.message && error.message.includes('Email already exists')) {
+                    alert('This email is already registered. Please use a different email or login with your existing account.');
+                } else {
+                    alert('Registration failed. Please try again.');
+                }
+            } finally {
                 // Reset button
                 signupBtn.innerHTML = originalText;
                 signupBtn.disabled = false;
-                
-                // Redirect to login page
-                window.location.href = 'login.html';
-            }, 2000);
+            }
         });
     }
     
@@ -93,13 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (googleBtn) {
         googleBtn.addEventListener('click', function() {
-            alert('Google signup would be implemented here');
+            alert('Google signup integration would be implemented here with OAuth 2.0');
         });
     }
     
     if (facebookBtn) {
         facebookBtn.addEventListener('click', function() {
-            alert('Facebook signup would be implemented here');
+            alert('Facebook signup integration would be implemented here with Facebook SDK');
         });
     }
     
@@ -110,6 +123,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const password = this.value;
             const strength = getPasswordStrength(password);
             showPasswordStrength(strength);
+        });
+    }
+    
+    // Real-time email validation
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+        emailInput.addEventListener('blur', async function() {
+            const email = this.value.trim();
+            if (email && isValidEmail(email) && dbReady) {
+                // Check if email already exists
+                try {
+                    const users = await EliteFitDB.getAllUsers();
+                    const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+                    
+                    if (existingUser) {
+                        this.style.borderColor = '#dc3545';
+                        showEmailError('This email is already registered');
+                    } else {
+                        this.style.borderColor = '#28a745';
+                        hideEmailError();
+                    }
+                } catch (error) {
+                    console.error('Email check failed:', error);
+                }
+            }
         });
     }
 });
@@ -190,4 +228,32 @@ function showPasswordStrength(strength) {
     `;
     
     passwordGroup.appendChild(indicator);
+}
+
+// Show email error
+function showEmailError(message) {
+    hideEmailError(); // Remove existing error
+    
+    const emailInput = document.getElementById('email');
+    const errorDiv = document.createElement('div');
+    errorDiv.id = 'email-error';
+    errorDiv.style.cssText = `
+        color: #dc3545;
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    `;
+    errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+    
+    emailInput.parentNode.appendChild(errorDiv);
+}
+
+// Hide email error
+function hideEmailError() {
+    const existingError = document.getElementById('email-error');
+    if (existingError) {
+        existingError.remove();
+    }
 }
