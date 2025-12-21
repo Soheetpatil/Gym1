@@ -377,116 +377,40 @@ window.checkDemoUsers = function() {
 
 // Auto-initialize
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 Initializing demo cloud database...');
     await demoCloudDB.init();
     
-    // Check if we need to reset demo data (for development)
+    // Check current users
     const users = demoCloudDB.getCloudUsers();
-    let needsReset = false;
+    console.log(`📊 Found ${users.length} existing users`);
     
-    // Check if test user exists and can authenticate
-    if (users.length > 0) {
+    // Always ensure we have test users (force create if needed)
+    if (users.length === 0) {
+        console.log('🔧 No users found, creating test users...');
+        await demoCloudDB.forceCreateTestUsers();
+    } else {
+        // Verify john@demo.com exists and can authenticate
         try {
-            const testAuth = await demoCloudDB.authenticateUser('test@demo.com', 'test123');
-            if (!testAuth.success && testAuth.message.includes('User not found')) {
-                needsReset = true;
-                console.log('🔄 Test user not found, resetting demo data...');
-            }
-        } catch (error) {
-            needsReset = true;
-            console.log('🔄 Authentication test failed, resetting demo data...');
-        }
-    }
-    
-    // Reset if needed or if no users exist
-    if (needsReset || users.length === 0) {
-        if (needsReset) {
-            demoCloudDB.resetDemoData();
-        }
-        
-        console.log('🔧 Creating fresh test users for demo...');
-        
-        const testUsers = [
-            {
-                fullName: 'John Smith',
-                email: 'john@demo.com',
-                password: 'john123',
-                membershipType: 'premium'
-            },
-            {
-                fullName: 'Sarah Johnson',
-                email: 'sarah@demo.com',
-                password: 'sarah123',
-                membershipType: 'basic'
-            },
-            {
-                fullName: 'Mike Wilson',
-                email: 'mike@demo.com',
-                password: 'mike123',
-                membershipType: 'vip'
-            },
-            {
-                fullName: 'Emma Davis',
-                email: 'emma@demo.com',
-                password: 'emma123',
-                membershipType: 'basic'
-            },
-            {
-                fullName: 'Alex Brown',
-                email: 'alex@demo.com',
-                password: 'alex123',
-                membershipType: 'premium'
-            },
-            {
-                fullName: 'Test User',
-                email: 'test@demo.com',
-                password: 'test123',
-                membershipType: 'basic'
-            }
-        ];
-        
-        console.log('📝 Creating multiple test accounts...');
-        
-        for (const userData of testUsers) {
-            try {
-                const result = await demoCloudDB.registerUser(userData);
-                if (result.success) {
-                    // Update membership type after creation
-                    const allUsers = demoCloudDB.getCloudUsers();
-                    const userIndex = allUsers.findIndex(u => u.email === userData.email);
-                    if (userIndex !== -1) {
-                        allUsers[userIndex].membershipType = userData.membershipType;
-                        demoCloudDB.saveCloudUsers(allUsers);
-                    }
-                    console.log(`✅ Created: ${userData.fullName} (${userData.email}) - ${userData.membershipType} member`);
-                } else {
-                    console.log(`❌ Failed to create: ${userData.fullName} - ${result.message}`);
-                }
-            } catch (error) {
-                console.error(`Error creating user ${userData.fullName}:`, error);
-            }
-        }
-        
-        console.log('🎉 All test users created successfully!');
-        console.log('📋 Available test accounts:');
-        console.log('   • john@demo.com / john123 (Premium Member)');
-        console.log('   • sarah@demo.com / sarah123 (Basic Member)');
-        console.log('   • mike@demo.com / mike123 (VIP Member)');
-        console.log('   • emma@demo.com / emma123 (Basic Member)');
-        console.log('   • alex@demo.com / alex123 (Premium Member)');
-        console.log('   • test@demo.com / test123 (Basic Member)');
-        
-        // Test authentication to make sure it works
-        try {
-            const testAuth = await demoCloudDB.authenticateUser('test@demo.com', 'test123');
-            if (testAuth.success) {
-                console.log('✅ Test authentication successful!');
+            const johnAuth = await demoCloudDB.authenticateUser('john@demo.com', 'john123');
+            if (!johnAuth.success) {
+                console.log('🔄 John authentication failed, recreating users...');
+                await demoCloudDB.forceCreateTestUsers();
             } else {
-                console.error('❌ Test authentication failed:', testAuth.message);
+                console.log('✅ Existing users verified successfully');
             }
         } catch (error) {
-            console.error('❌ Test authentication error:', error);
+            console.log('🔄 User verification failed, recreating users...');
+            await demoCloudDB.forceCreateTestUsers();
         }
     }
+    
+    // Final verification
+    const finalUsers = demoCloudDB.getCloudUsers();
+    console.log('🎉 Demo initialization complete!');
+    console.log('📋 Available test accounts:');
+    finalUsers.forEach(user => {
+        console.log(`   • ${user.email} (${user.fullName}) - ${user.membershipType} member`);
+    });
     
     // Show status after 2 seconds
     setTimeout(() => {

@@ -425,10 +425,24 @@ async function displayRegisteredUsers() {
     }
 }
 
+// Helper function to get password for demo accounts
+function getPasswordForEmail(email) {
+    const demoPasswords = {
+        'john@demo.com': 'john123',
+        'sarah@demo.com': 'sarah123',
+        'mike@demo.com': 'mike123',
+        'emma@demo.com': 'emma123',
+        'alex@demo.com': 'alex123',
+        'test@demo.com': 'test123'
+    };
+    return demoPasswords[email.toLowerCase()] || '';
+}
+
 // Fill user credentials with enhanced animations
-window.fillUserCredentials = function(email, fullName, membershipType) {
+window.fillUserCredentials = function(email, fullName, membershipType, password) {
+    // Fill both email and password
     document.getElementById('email').value = email;
-    document.getElementById('password').focus();
+    document.getElementById('password').value = password || getPasswordForEmail(email);
     
     // Enhanced visual feedback with ripple effect
     const userItems = document.querySelectorAll('.user-item');
