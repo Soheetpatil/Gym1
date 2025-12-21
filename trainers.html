@@ -158,15 +158,16 @@
 <body>
     <header>
         <div class="container nav-container">
-            <a href="index.html" class="logo">Elite<span>Fit</span> Gym</a>
+            <a href="home.html" class="logo">Elite<span>Fit</span> Gym</a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="home.html">Home</a></li>
                 <li><a href="features.html">Features</a></li>
                 <li><a href="classes.html">Classes</a></li>
                 <li><a href="membership.html">Membership</a></li>
                 <li><a href="trainers.html">Trainers</a></li>
                 <li><a href="schedule.html">Schedule</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </div>
     </header>
@@ -226,5 +227,15 @@
             <p>&copy; 2023 EliteFit Gym. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
 </body>
 </html>

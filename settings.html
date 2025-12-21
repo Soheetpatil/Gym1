@@ -46,109 +46,109 @@
             <div class="settings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
                 
                 <!-- User Profile Card -->
-                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                <div class="settings-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.8); transition: all 0.3s ease;">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; margin-right: 1.5rem; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
                             <i class="fas fa-user"></i>
                         </div>
                         <div>
-                            <h3 style="margin: 0; color: var(--primary);">Profile Information</h3>
-                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;" id="userEmail">Loading...</p>
+                            <h3 style="margin: 0; color: var(--primary); font-size: 1.4rem; font-weight: 600;">Profile Information</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 1rem;" id="userEmail">Loading...</p>
                         </div>
                     </div>
                     
                     <div class="profile-info">
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
-                                <i class="fas fa-user"></i> Full Name
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">
+                                <i class="fas fa-user" style="margin-right: 8px; color: var(--secondary);"></i> Full Name
                             </label>
-                            <p id="userName" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                            <p id="userName" style="margin: 0; padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; color: var(--primary); font-weight: 500; border-left: 4px solid var(--primary);">Loading...</p>
                         </div>
                         
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
-                                <i class="fas fa-crown"></i> Membership Type
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">
+                                <i class="fas fa-crown" style="margin-right: 8px; color: #ffd700;"></i> Membership Type
                             </label>
-                            <p id="membershipType" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent); text-transform: capitalize;">Loading...</p>
+                            <p id="membershipType" style="margin: 0; padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; color: var(--primary); font-weight: 500; text-transform: capitalize; border-left: 4px solid #ffd700;">Loading...</p>
                         </div>
                         
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
-                                <i class="fas fa-calendar-alt"></i> Member Since
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">
+                                <i class="fas fa-calendar-alt" style="margin-right: 8px; color: #28a745;"></i> Member Since
                             </label>
-                            <p id="memberSince" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                            <p id="memberSince" style="margin: 0; padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; color: var(--primary); font-weight: 500; border-left: 4px solid #28a745;">Loading...</p>
                         </div>
                         
                         <div>
-                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
-                                <i class="fas fa-clock"></i> Last Login
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">
+                                <i class="fas fa-clock" style="margin-right: 8px; color: #17a2b8;"></i> Last Login
                             </label>
-                            <p id="lastLogin" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                            <p id="lastLogin" style="margin: 0; padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; color: var(--primary); font-weight: 500; border-left: 4px solid #17a2b8;">Loading...</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Change Password Card -->
-                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                <div class="settings-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.8); transition: all 0.3s ease;">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; margin-right: 1.5rem; box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);">
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h3 style="margin: 0; color: var(--primary);">Change Password</h3>
-                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Update your account password</p>
+                            <h3 style="margin: 0; color: var(--primary); font-size: 1.4rem; font-weight: 600;">Change Password</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 1rem;">Update your account password securely</p>
                         </div>
                     </div>
                     
                     <form id="changePasswordForm">
-                        <div class="form-group" style="margin-bottom: 1rem;">
-                            <label for="currentPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Current Password</label>
-                            <div class="input-container">
-                                <i class="fas fa-lock"></i>
-                                <input type="password" id="currentPassword" placeholder="Enter current password" required>
-                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('currentPassword', 'currentToggle')">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="currentPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">Current Password</label>
+                            <div class="input-container" style="position: relative;">
+                                <i class="fas fa-lock" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); z-index: 2;"></i>
+                                <input type="password" id="currentPassword" placeholder="Enter current password" required style="width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #e1e5e9; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; background: white;">
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('currentPassword', 'currentToggle')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--accent); cursor: pointer; padding: 5px; z-index: 2;">
                                     <i class="fas fa-eye" id="currentToggle"></i>
                                 </button>
                             </div>
                         </div>
                         
-                        <div class="form-group" style="margin-bottom: 1rem;">
-                            <label for="newPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">New Password</label>
-                            <div class="input-container">
-                                <i class="fas fa-key"></i>
-                                <input type="password" id="newPassword" placeholder="Enter new password" required>
-                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('newPassword', 'newToggle')">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="newPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">New Password</label>
+                            <div class="input-container" style="position: relative;">
+                                <i class="fas fa-key" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); z-index: 2;"></i>
+                                <input type="password" id="newPassword" placeholder="Enter new password" required style="width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #e1e5e9; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; background: white;">
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('newPassword', 'newToggle')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--accent); cursor: pointer; padding: 5px; z-index: 2;">
                                     <i class="fas fa-eye" id="newToggle"></i>
                                 </button>
                             </div>
                         </div>
                         
-                        <div class="form-group" style="margin-bottom: 1.5rem;">
-                            <label for="confirmNewPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Confirm New Password</label>
-                            <div class="input-container">
-                                <i class="fas fa-check"></i>
-                                <input type="password" id="confirmNewPassword" placeholder="Confirm new password" required>
-                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirmNewPassword', 'confirmToggle')">
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label for="confirmNewPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">Confirm New Password</label>
+                            <div class="input-container" style="position: relative;">
+                                <i class="fas fa-check" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); z-index: 2;"></i>
+                                <input type="password" id="confirmNewPassword" placeholder="Confirm new password" required style="width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #e1e5e9; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; background: white;">
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirmNewPassword', 'confirmToggle')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--accent); cursor: pointer; padding: 5px; z-index: 2;">
                                     <i class="fas fa-eye" id="confirmToggle"></i>
                                 </button>
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border: none;">
-                            <i class="fas fa-save"></i> Update Password
+                        <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">
+                            <i class="fas fa-save" style="margin-right: 8px;"></i> Update Password
                         </button>
                     </form>
                 </div>
 
                 <!-- Account Actions Card -->
-                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                <div class="settings-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.8); transition: all 0.3s ease;">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; margin-right: 1.5rem; box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);">
                             <i class="fas fa-exclamation-triangle"></i>
                         </div>
                         <div>
-                            <h3 style="margin: 0; color: var(--primary);">Account Actions</h3>
-                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Manage your account</p>
+                            <h3 style="margin: 0; color: var(--primary); font-size: 1.4rem; font-weight: 600;">Account Actions</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 1rem;">Manage your account data and preferences</p>
                         </div>
                     </div>
                     
@@ -163,65 +163,65 @@
                             </p>
                         </div>
                         
-                        <div style="margin-bottom: 1rem;">
-                            <button type="button" class="btn btn-secondary" onclick="exportAccountData()" style="width: 100%; margin-bottom: 0.5rem;">
-                                <i class="fas fa-download"></i> Export Account Data
+                        <div style="margin-bottom: 1.5rem;">
+                            <button type="button" class="btn btn-secondary" onclick="exportAccountData()" style="width: 100%; margin-bottom: 0.75rem; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 600; background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%); border: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);">
+                                <i class="fas fa-download" style="margin-right: 8px;"></i> Export Account Data
                             </button>
-                            <p style="margin: 0; font-size: 0.8rem; color: var(--accent); text-align: center;">Download your account information</p>
+                            <p style="margin: 0; font-size: 0.9rem; color: var(--accent); text-align: center;">Download your account information as JSON file</p>
                         </div>
                         
-                        <div style="border-top: 2px solid var(--light); padding-top: 1.5rem;">
-                            <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #721c24; display: flex; align-items: center;">
-                                    <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+                        <div style="border-top: 2px solid var(--light); padding-top: 2rem;">
+                            <div style="background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); border: 2px solid #f5c6cb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                                <h4 style="margin: 0 0 0.75rem 0; color: #721c24; display: flex; align-items: center; font-size: 1.1rem; font-weight: 600;">
+                                    <i class="fas fa-exclamation-triangle" style="margin-right: 0.75rem; font-size: 1.2rem;"></i>
                                     Danger Zone
                                 </h4>
-                                <p style="margin: 0; color: #721c24; font-size: 0.9rem;">
-                                    Once you delete your account, there is no going back. Please be certain.
+                                <p style="margin: 0; color: #721c24; font-size: 1rem; line-height: 1.5;">
+                                    Once you delete your account, there is no going back. Please be certain before proceeding.
                                 </p>
                             </div>
                             
-                            <button type="button" class="btn" onclick="confirmDeleteAccount()" style="width: 100%; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none;">
-                                <i class="fas fa-trash-alt"></i> Delete Account
+                            <button type="button" class="btn" onclick="confirmDeleteAccount()" style="width: 100%; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);">
+                                <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Delete Account Permanently
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Device Information Card -->
-                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                <div class="settings-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.8); transition: all 0.3s ease;">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; margin-right: 1.5rem; box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);">
                             <i class="fas fa-mobile-alt"></i>
                         </div>
                         <div>
-                            <h3 style="margin: 0; color: var(--primary);">Device Information</h3>
-                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Cross-device login status</p>
+                            <h3 style="margin: 0; color: var(--primary); font-size: 1.4rem; font-weight: 600;">Device Information</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 1rem;">Cross-device login status and details</p>
                         </div>
                     </div>
                     
                     <div class="device-info">
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
-                                <i class="fas fa-desktop"></i> Current Device
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">
+                                <i class="fas fa-desktop" style="margin-right: 8px; color: #6f42c1;"></i> Current Device
                             </label>
-                            <p id="currentDevice" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent); font-size: 0.85rem;">Loading...</p>
+                            <p id="currentDevice" style="margin: 0; padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; color: var(--primary); font-weight: 500; font-size: 0.9rem; border-left: 4px solid #6f42c1; word-break: break-word;">Loading...</p>
                         </div>
                         
-                        <div style="margin-bottom: 1rem;">
-                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
-                                <i class="fas fa-globe"></i> Platform
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">
+                                <i class="fas fa-globe" style="margin-right: 8px; color: #e83e8c;"></i> Platform
                             </label>
-                            <p id="currentPlatform" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                            <p id="currentPlatform" style="margin: 0; padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; color: var(--primary); font-weight: 500; border-left: 4px solid #e83e8c;">Loading...</p>
                         </div>
                         
-                        <div style="background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 8px; padding: 1rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #0c5460; display: flex; align-items: center;">
-                                <i class="fas fa-cloud" style="margin-right: 0.5rem;"></i>
+                        <div style="background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%); border: 2px solid #bee5eb; border-radius: 12px; padding: 1.5rem;">
+                            <h4 style="margin: 0 0 0.75rem 0; color: #0c5460; display: flex; align-items: center; font-size: 1.1rem; font-weight: 600;">
+                                <i class="fas fa-cloud" style="margin-right: 0.75rem; font-size: 1.2rem;"></i>
                                 Cross-Device Login
                             </h4>
-                            <p style="margin: 0; color: #0c5460; font-size: 0.9rem;">
-                                Your account works across all devices. Login with the same email and password from any device.
+                            <p style="margin: 0; color: #0c5460; font-size: 1rem; line-height: 1.5;">
+                                Your account works seamlessly across all devices. Login with the same email and password from any device, anywhere.
                             </p>
                         </div>
                     </div>
