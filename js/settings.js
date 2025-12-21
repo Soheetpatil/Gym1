@@ -144,13 +144,21 @@ function setupChangePasswordForm() {
             }
 
             if (newPassword !== confirmNewPassword) {
-                showSettingsMessage('New passwords do not match.', 'error');
+                showSettingsMessage('New passwords do not match. Please check and try again.', 'error');
                 return;
             }
 
             if (currentPassword === newPassword) {
                 showSettingsMessage('New password must be different from current password.', 'error');
                 return;
+            }
+
+            // Additional password strength check
+            if (newPassword.length < 8) {
+                const proceed = confirm('Your new password is less than 8 characters. For better security, we recommend using at least 8 characters. Do you want to continue?');
+                if (!proceed) {
+                    return;
+                }
             }
 
             // Show loading state
@@ -160,11 +168,11 @@ function setupChangePasswordForm() {
             submitBtn.disabled = true;
 
             try {
-                // Verify current password
+                // Verify current password first
                 const authResult = await window.DemoCloudDB.authenticateUser(currentUser.email, currentPassword);
                 
                 if (!authResult.success) {
-                    showSettingsMessage('Current password is incorrect.', 'error');
+                    showSettingsMessage('Current password is incorrect. Please try again.', 'error');
                     return;
                 }
 
@@ -172,25 +180,25 @@ function setupChangePasswordForm() {
                 const updateResult = await updateUserPassword(currentUser.email, newPassword);
                 
                 if (updateResult.success) {
-                    showSettingsMessage('Password updated successfully!', 'success');
+                    showSettingsMessage('Password updated successfully! You will be logged out for security.', 'success');
                     
                     // Clear form
                     form.reset();
                     
                     // Auto-logout after password change for security
                     setTimeout(() => {
-                        showSettingsMessage('For security, you will be logged out in 3 seconds...', 'warning');
+                        showSettingsMessage('Logging out for security...', 'warning');
                         setTimeout(() => {
                             logout();
-                        }, 3000);
+                        }, 2000);
                     }, 2000);
                 } else {
-                    showSettingsMessage(updateResult.message || 'Failed to update password.', 'error');
+                    showSettingsMessage(updateResult.message || 'Failed to update password. Please try again.', 'error');
                 }
 
             } catch (error) {
                 console.error('Password change error:', error);
-                showSettingsMessage('An error occurred while updating password.', 'error');
+                showSettingsMessage('An error occurred while updating password. Please try again.', 'error');
             } finally {
                 // Reset button
                 submitBtn.innerHTML = originalText;
@@ -203,6 +211,10 @@ function setupChangePasswordForm() {
 // Update user password in database
 async function updateUserPassword(email, newPassword) {
     try {
+        if (!window.DemoCloudDB) {
+            return { success: false, message: 'Database not available' };
+        }
+
         const users = window.DemoCloudDB.getCloudUsers();
         const userIndex = users.findIndex(u => u.email === email.toLowerCase());
 
@@ -210,21 +222,27 @@ async function updateUserPassword(email, newPassword) {
             return { success: false, message: 'User not found' };
         }
 
-        // Hash new password
+        // Hash new password using the same method as registration
         const hashedPassword = await window.DemoCloudDB.hashPassword(newPassword);
         
-        // Update user
+        // Update user password and metadata
         users[userIndex].password = hashedPassword;
         users[userIndex].passwordChangedAt = new Date().toISOString();
+        users[userIndex].lastPasswordChange = new Date().toISOString();
         
         // Save to database
         const saved = window.DemoCloudDB.saveCloudUsers(users);
         
         if (saved) {
-            console.log('✅ Password updated successfully');
-            return { success: true };
+            console.log('✅ Password updated successfully for:', email);
+            
+            // Update current user object
+            currentUser.password = hashedPassword;
+            currentUser.passwordChangedAt = users[userIndex].passwordChangedAt;
+            
+            return { success: true, message: 'Password updated successfully' };
         } else {
-            return { success: false, message: 'Failed to save password change' };
+            return { success: false, message: 'Failed to save password change to database' };
         }
 
     } catch (error) {
@@ -554,3 +572,55 @@ function logout() {
         window.location.href = 'login.html';
     }, 1000);
 }
+// Scroll to top functionality
+function addScrollToTopButton() {
+    // Create scroll to top button
+    const scrollBtn = document.createElement('button');
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    scrollBtn.setAttribute('aria-label', 'Scroll to top');
+    
+    // Add click handler
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Add to page
+    document.body.appendChild(scrollBtn);
+    
+    // Show/hide based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            scrollBtn.classList.add('show');
+        } else {
+            scrollBtn.classList.remove('show');
+        }
+    });
+}
+
+// Initialize scroll to top button when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Add scroll to top button after a short delay
+    setTimeout(() => {
+        addScrollToTopButton();
+    }, 1000);
+});
+
+// Ensure smooth scrolling for the entire page
+function ensureSmoothScrolling() {
+    // Force enable scrolling
+    document.body.style.overflowY = 'auto';
+    document.documentElement.style.overflowY = 'auto';
+    
+    // Ensure proper height calculations
+    const settingsContainer = document.querySelector('.settings-container');
+    if (settingsContainer) {
+        settingsContainer.style.minHeight = 'auto';
+    }
+}
+
+// Call smooth scrolling function
+ensureSmoothScrolling();
