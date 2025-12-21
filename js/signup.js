@@ -5,12 +5,31 @@ let dbReady = false;
 // Initialize database when page loads
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        await EliteFitDB.init();
+        // Wait for EliteFitDB to be available
+        if (!window.EliteFitDB) {
+            throw new Error('EliteFitDB not loaded');
+        }
+        
+        await window.EliteFitDB.init();
         dbReady = true;
         console.log('Database initialized for signup');
     } catch (error) {
         console.error('Database initialization failed:', error);
-        alert('Database initialization failed. Registration may not work properly.');
+        
+        // Retry after a short delay
+        setTimeout(async () => {
+            try {
+                if (window.EliteFitDB) {
+                    await window.EliteFitDB.init();
+                    dbReady = true;
+                    console.log('Database initialized for signup (retry successful)');
+                } else {
+                    console.error('EliteFitDB still not available after retry');
+                }
+            } catch (retryError) {
+                console.error('Database retry failed:', retryError);
+            }
+        }, 1000);
     }
 
     const signupForm = document.getElementById('signupForm');
@@ -71,26 +90,45 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             try {
                 // Register user
-                const result = await EliteFitDB.registerUser({
+                const result = await window.EliteFitDB.registerUser({
                     fullName: fullName.trim(),
                     email: email.trim(),
                     password: password
                 });
                 
                 if (result.success) {
-                    alert(`Account created successfully for ${fullName}! You can now login with your credentials.`);
+                    // Show animated success message
+                    showAnimatedMessage(
+                        `🎉 Welcome to EliteFit, ${fullName}!`,
+                        'Account created successfully. Redirecting to login...',
+                        'success'
+                    );
                     
-                    // Redirect to login page
-                    window.location.href = 'login.html';
+                    // Redirect to login page after animation
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
                 } else {
-                    alert(result.message || 'Registration failed. Please try again.');
+                    showAnimatedMessage(
+                        '❌ Registration Failed',
+                        result.message || 'Please try again with different details.',
+                        'error'
+                    );
                 }
             } catch (error) {
                 console.error('Registration error:', error);
                 if (error.message && error.message.includes('Email already exists')) {
-                    alert('This email is already registered. Please use a different email or login with your existing account.');
+                    showAnimatedMessage(
+                        '📧 Email Already Registered',
+                        'This email is already in use. Please login or use a different email.',
+                        'warning'
+                    );
                 } else {
-                    alert('Registration failed. Please try again.');
+                    showAnimatedMessage(
+                        '⚠️ Registration Error',
+                        'Something went wrong. Please try again.',
+                        'error'
+                    );
                 }
             } finally {
                 // Reset button
@@ -134,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (email && isValidEmail(email) && dbReady) {
                 // Check if email already exists
                 try {
-                    const users = await EliteFitDB.getAllUsers();
+                    const users = await window.EliteFitDB.getAllUsers();
                     const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
                     
                     if (existingUser) {

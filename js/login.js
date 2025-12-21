@@ -1,34 +1,221 @@
 // Login Page JavaScript
 
 let dbReady = false;
+let dbInitPromise = null;
 
 // Initialize database when page loads
 document.addEventListener('DOMContentLoaded', async function() {
+    // Show loading indicator
+    showDatabaseStatus('Initializing database...', 'loading');
+    
     try {
-        await EliteFitDB.init();
+        // Wait for EliteFitDB to be available
+        if (!window.EliteFitDB) {
+            throw new Error('EliteFitDB not loaded');
+        }
+        
+        // Initialize database with retry logic
+        dbInitPromise = initializeDatabase();
+        await dbInitPromise;
+        
         dbReady = true;
         console.log('Database initialized successfully');
+        showDatabaseStatus('Database ready', 'success');
         
         // Load registered users count
-        loadRegisteredUsersCount();
+        await loadRegisteredUsersCount();
         
         // Clean expired sessions
-        EliteFitDB.cleanExpiredSessions();
+        await window.EliteFitDB.cleanExpiredSessions();
+        
+        // Hide status after 2 seconds
+        setTimeout(() => hideDatabaseStatus(), 2000);
         
     } catch (error) {
         console.error('Database initialization failed:', error);
-        alert('Database initialization failed. Some features may not work properly.');
+        showDatabaseStatus('Database initialization failed. Retrying...', 'error');
+        
+        // Retry after 2 seconds
+        setTimeout(async () => {
+            try {
+                if (window.EliteFitDB) {
+                    await window.EliteFitDB.init();
+                    dbReady = true;
+                    showDatabaseStatus('Database ready', 'success');
+                    await loadRegisteredUsersCount();
+                    setTimeout(() => hideDatabaseStatus(), 2000);
+                } else {
+                    throw new Error('EliteFitDB still not available');
+                }
+            } catch (retryError) {
+                console.error('Database retry failed:', retryError);
+                showDatabaseStatus('Database unavailable. Please refresh the page.', 'error');
+            }
+        }, 2000);
     }
 
+    setupLoginForm();
+    setupSocialButtons();
+    setupRegisteredUsers();
+});
+
+// Initialize database with better error handling
+async function initializeDatabase() {
+    if (!window.indexedDB) {
+        throw new Error('IndexedDB not supported in this browser');
+    }
+    
+    if (!window.EliteFitDB) {
+        throw new Error('EliteFitDB class not available');
+    }
+    
+    return await window.EliteFitDB.init();
+}
+
+// Show database status with animations
+function showDatabaseStatus(message, type) {
+    let statusDiv = document.getElementById('db-status');
+    
+    if (!statusDiv) {
+        statusDiv = document.createElement('div');
+        statusDiv.id = 'db-status';
+        statusDiv.style.cssText = `
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 10000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        `;
+        document.body.appendChild(statusDiv);
+    }
+    
+    const animations = {
+        loading: {
+            bg: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            icon: 'fas fa-spinner fa-spin',
+            animation: 'slideInBounce 0.6s ease-out, pulse 2s infinite'
+        },
+        success: {
+            bg: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+            color: 'white',
+            icon: 'fas fa-check-circle',
+            animation: 'slideInSuccess 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), successGlow 1s ease-in-out'
+        },
+        error: {
+            bg: 'linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%)',
+            color: 'white',
+            icon: 'fas fa-exclamation-triangle',
+            animation: 'slideInShake 0.6s ease-out, errorShake 0.5s ease-in-out 0.6s'
+        }
+    };
+    
+    const style = animations[type] || animations.loading;
+    
+    // Add CSS animations if not already added
+    if (!document.getElementById('message-animations')) {
+        const animationStyles = document.createElement('style');
+        animationStyles.id = 'message-animations';
+        animationStyles.textContent = `
+            @keyframes slideInBounce {
+                0% { transform: translateX(-50%) translateY(-100px) scale(0.8); opacity: 0; }
+                60% { transform: translateX(-50%) translateY(10px) scale(1.05); opacity: 1; }
+                100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+            }
+            
+            @keyframes slideInSuccess {
+                0% { transform: translateX(-50%) translateY(-100px) scale(0.5) rotate(-10deg); opacity: 0; }
+                50% { transform: translateX(-50%) translateY(5px) scale(1.1) rotate(5deg); opacity: 1; }
+                100% { transform: translateX(-50%) translateY(0) scale(1) rotate(0deg); opacity: 1; }
+            }
+            
+            @keyframes slideInShake {
+                0% { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+                50% { transform: translateX(-50%) translateY(0); opacity: 1; }
+                60% { transform: translateX(-45%) translateY(0); }
+                70% { transform: translateX(-55%) translateY(0); }
+                80% { transform: translateX(-48%) translateY(0); }
+                90% { transform: translateX(-52%) translateY(0); }
+                100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            }
+            
+            @keyframes pulse {
+                0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+                50% { box-shadow: 0 6px 30px rgba(102, 126, 234, 0.4); }
+            }
+            
+            @keyframes successGlow {
+                0% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+                50% { box-shadow: 0 8px 40px rgba(17, 153, 142, 0.6), 0 0 20px rgba(56, 239, 125, 0.3); }
+                100% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+            }
+            
+            @keyframes errorShake {
+                0%, 100% { transform: translateX(-50%) translateY(0); }
+                25% { transform: translateX(-48%) translateY(0); }
+                75% { transform: translateX(-52%) translateY(0); }
+            }
+            
+            @keyframes slideOut {
+                0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+                100% { transform: translateX(-50%) translateY(-100px) scale(0.8); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(animationStyles);
+    }
+    
+    statusDiv.style.background = style.bg;
+    statusDiv.style.color = style.color;
+    statusDiv.style.animation = style.animation;
+    statusDiv.innerHTML = `<i class="${style.icon}" style="margin-right: 8px;"></i>${message}`;
+    statusDiv.style.opacity = '1';
+    statusDiv.style.transform = 'translateX(-50%) translateY(0)';
+}
+
+// Hide database status with animation
+function hideDatabaseStatus() {
+    const statusDiv = document.getElementById('db-status');
+    if (statusDiv) {
+        statusDiv.style.animation = 'slideOut 0.4s ease-in-out';
+        setTimeout(() => {
+            if (statusDiv.parentNode) {
+                statusDiv.parentNode.removeChild(statusDiv);
+            }
+        }, 400);
+    }
+}
+
+// Setup login form
+function setupLoginForm() {
     const loginForm = document.getElementById('loginForm');
     
-    // Handle form submission
     if (loginForm) {
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Wait for database if it's still initializing
+            if (!dbReady && dbInitPromise) {
+                showDatabaseStatus('Waiting for database...', 'loading');
+                try {
+                    await dbInitPromise;
+                    dbReady = true;
+                    hideDatabaseStatus();
+                } catch (error) {
+                    showDatabaseStatus('Database error. Please refresh the page.', 'error');
+                    return;
+                }
+            }
+            
             if (!dbReady) {
-                alert('Database not ready. Please wait and try again.');
+                alert('Database not available. Please refresh the page and try again.');
                 return;
             }
             
@@ -56,11 +243,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             try {
                 // Authenticate user
-                const result = await EliteFitDB.authenticateUser(email, password);
+                const result = await window.EliteFitDB.authenticateUser(email, password);
                 
                 if (result.success) {
                     // Create session
-                    const sessionResult = await EliteFitDB.createSession(result.user.id);
+                    const sessionResult = await window.EliteFitDB.createSession(result.user.id);
                     
                     if (sessionResult.success) {
                         // Store user data
@@ -70,10 +257,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                         localStorage.setItem('userId', result.user.id);
                         localStorage.setItem('membershipType', result.user.membershipType);
                         
-                        alert(`Login successful! Welcome back, ${result.user.fullName}!`);
+                        showDatabaseStatus(`Welcome back, ${result.user.fullName}!`, 'success');
                         
-                        // Redirect to home page
-                        window.location.href = 'home.html';
+                        // Redirect after short delay
+                        setTimeout(() => {
+                            window.location.href = 'home.html';
+                        }, 1000);
                     } else {
                         throw new Error('Session creation failed');
                     }
@@ -90,8 +279,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
     }
-    
-    // Social login buttons
+}
+
+// Setup social buttons
+function setupSocialButtons() {
     const googleBtn = document.querySelector('.google-btn');
     const facebookBtn = document.querySelector('.facebook-btn');
     
@@ -106,26 +297,34 @@ document.addEventListener('DOMContentLoaded', async function() {
             alert('Facebook login integration would be implemented here with Facebook SDK');
         });
     }
-    
-    // Show/Hide registered users functionality
+}
+
+// Setup registered users functionality
+function setupRegisteredUsers() {
     const showUsersBtn = document.getElementById('showUsersBtn');
     const registeredUsersSection = document.getElementById('registeredUsersSection');
     
     if (showUsersBtn && registeredUsersSection) {
         showUsersBtn.addEventListener('click', async function() {
+            if (!dbReady) {
+                alert('Database not ready. Please wait a moment and try again.');
+                return;
+            }
+            
             const isVisible = registeredUsersSection.style.display !== 'none';
             
             if (isVisible) {
                 registeredUsersSection.style.display = 'none';
                 this.innerHTML = '<i class="fas fa-users"></i> Show Registered Users';
             } else {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Users...';
                 await displayRegisteredUsers();
                 registeredUsersSection.style.display = 'block';
                 this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Registered Users';
             }
         });
     }
-});
+}
 
 // Display registered users
 async function displayRegisteredUsers() {
@@ -134,7 +333,7 @@ async function displayRegisteredUsers() {
     const usersList = document.getElementById('usersList');
     
     try {
-        const users = await EliteFitDB.getAllUsers();
+        const users = await window.EliteFitDB.getAllUsers();
         
         if (users.length === 0) {
             usersList.innerHTML = '<p style="margin: 0; font-size: 0.85rem; color: #666; text-align: center;">No registered users yet. <a href="signup.html" style="color: var(--primary);">Sign up</a> to create an account!</p>';
@@ -166,69 +365,130 @@ async function displayRegisteredUsers() {
     }
 }
 
-// Fill user credentials (only email, password is hashed)
+// Fill user credentials with enhanced animations
 window.fillUserCredentials = function(email, fullName, membershipType) {
     document.getElementById('email').value = email;
     document.getElementById('password').focus();
     
-    // Visual feedback
+    // Enhanced visual feedback with ripple effect
     const userItems = document.querySelectorAll('.user-item');
     userItems.forEach(item => {
         if (item.textContent.includes(email)) {
+            // Create ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: radial-gradient(circle, rgba(40, 167, 69, 0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                animation: rippleEffect 0.8s ease-out;
+                pointer-events: none;
+                z-index: 1;
+            `;
+            
+            item.style.position = 'relative';
+            item.style.overflow = 'hidden';
+            item.appendChild(ripple);
+            
+            // Enhanced item animation
             item.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
             item.style.borderColor = '#28a745';
-            item.style.transform = 'scale(1.02)';
+            item.style.transform = 'scale(1.05) translateY(-2px)';
+            item.style.boxShadow = '0 8px 25px rgba(40, 167, 69, 0.3)';
+            item.style.transition = 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
             
+            // Remove ripple after animation
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 800);
+            
+            // Reset item styles
             setTimeout(() => {
                 item.style.background = 'white';
                 item.style.borderColor = '#e0e0e0';
-                item.style.transform = 'scale(1)';
-            }, 2000);
+                item.style.transform = 'scale(1) translateY(0)';
+                item.style.boxShadow = 'none';
+            }, 2500);
         }
     });
     
-    // Show success message
+    // Enhanced success message with slide-in animation
     const tempMsg = document.createElement('div');
     tempMsg.style.cssText = `
         position: fixed; 
         top: 20px; 
-        right: 20px; 
+        right: -400px; 
         background: linear-gradient(135deg, #28a745 0%, #20c997 100%); 
         color: white; 
-        padding: 12px 20px; 
-        border-radius: 8px; 
+        padding: 16px 24px; 
+        border-radius: 12px; 
         z-index: 9999; 
-        font-size: 0.9rem;
-        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        animation: slideIn 0.3s ease;
+        font-size: 0.95rem;
+        box-shadow: 0 8px 32px rgba(40, 167, 69, 0.4);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        min-width: 280px;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     `;
     tempMsg.innerHTML = `
-        <i class="fas fa-check-circle"></i> 
-        Email filled for <strong>${fullName}</strong><br>
-        <small>Please enter your password</small>
+        <div style="display: flex; align-items: center; margin-bottom: 4px;">
+            <i class="fas fa-check-circle" style="margin-right: 8px; font-size: 1.1rem;"></i> 
+            <strong>Email Selected!</strong>
+        </div>
+        <div style="font-size: 0.85rem; opacity: 0.9;">
+            Logged in as <strong>${fullName}</strong><br>
+            Please enter your password to continue
+        </div>
     `;
     
-    // Add animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-    `;
-    document.head.appendChild(style);
+    // Add ripple animation CSS if not exists
+    if (!document.getElementById('ripple-animations')) {
+        const rippleStyles = document.createElement('style');
+        rippleStyles.id = 'ripple-animations';
+        rippleStyles.textContent = `
+            @keyframes rippleEffect {
+                0% { width: 0; height: 0; opacity: 1; }
+                100% { width: 200px; height: 200px; opacity: 0; }
+            }
+            
+            @keyframes messageSlideIn {
+                0% { transform: translateX(100%) scale(0.8); opacity: 0; }
+                60% { transform: translateX(-10px) scale(1.05); opacity: 1; }
+                100% { transform: translateX(0) scale(1); opacity: 1; }
+            }
+            
+            @keyframes messageSlideOut {
+                0% { transform: translateX(0) scale(1); opacity: 1; }
+                100% { transform: translateX(100%) scale(0.8); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(rippleStyles);
+    }
     
     document.body.appendChild(tempMsg);
     
+    // Trigger slide-in animation
     setTimeout(() => {
-        if (document.body.contains(tempMsg)) {
-            tempMsg.style.animation = 'slideIn 0.3s ease reverse';
-            setTimeout(() => document.body.removeChild(tempMsg), 300);
-        }
-        if (document.head.contains(style)) {
-            document.head.removeChild(style);
-        }
-    }, 3000);
+        tempMsg.style.right = '20px';
+        tempMsg.style.animation = 'messageSlideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    }, 100);
+    
+    // Auto-hide with slide-out animation
+    setTimeout(() => {
+        tempMsg.style.animation = 'messageSlideOut 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
+        tempMsg.style.right = '-400px';
+        setTimeout(() => {
+            if (document.body.contains(tempMsg)) {
+                document.body.removeChild(tempMsg);
+            }
+        }, 500);
+    }, 3500);
 };
 
 // Load registered users count
@@ -236,7 +496,7 @@ async function loadRegisteredUsersCount() {
     if (!dbReady) return;
     
     try {
-        const users = await EliteFitDB.getAllUsers();
+        const users = await window.EliteFitDB.getAllUsers();
         const showUsersBtn = document.getElementById('showUsersBtn');
         if (showUsersBtn && users.length > 0) {
             showUsersBtn.innerHTML = `<i class="fas fa-users"></i> Show Registered Users (${users.length})`;

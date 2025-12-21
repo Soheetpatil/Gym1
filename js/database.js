@@ -6,30 +6,54 @@ class EliteFitDB {
         this.dbName = 'EliteFitGymDB';
         this.version = 1;
         this.db = null;
+        this.isInitialized = false;
     }
 
     // Initialize database
     async init() {
+        if (this.isInitialized && this.db) {
+            console.log('Database already initialized');
+            return this.db;
+        }
+
         return new Promise((resolve, reject) => {
+            console.log('Starting database initialization...');
+            
+            if (!window.indexedDB) {
+                const error = new Error('IndexedDB not supported in this browser');
+                console.error(error.message);
+                reject(error);
+                return;
+            }
+
             const request = indexedDB.open(this.dbName, this.version);
 
             request.onerror = () => {
-                console.error('Database failed to open');
-                reject(request.error);
+                const error = new Error(`Database failed to open: ${request.error?.message || 'Unknown error'}`);
+                console.error(error.message);
+                reject(error);
             };
 
             request.onsuccess = () => {
                 this.db = request.result;
+                this.isInitialized = true;
                 console.log('Database opened successfully');
+                
+                // Add error handler for database
+                this.db.onerror = (event) => {
+                    console.error('Database error:', event.target.error);
+                };
+                
                 resolve(this.db);
             };
 
             request.onupgradeneeded = (e) => {
+                console.log('Database upgrade needed, creating object stores...');
                 this.db = e.target.result;
-                console.log('Database upgrade needed');
 
                 // Create Users object store
                 if (!this.db.objectStoreNames.contains('users')) {
+                    console.log('Creating users object store...');
                     const usersStore = this.db.createObjectStore('users', { 
                         keyPath: 'id', 
                         autoIncrement: true 
@@ -40,19 +64,23 @@ class EliteFitDB {
                     usersStore.createIndex('fullName', 'fullName', { unique: false });
                     usersStore.createIndex('registrationDate', 'registrationDate', { unique: false });
                     usersStore.createIndex('lastLogin', 'lastLogin', { unique: false });
+                    console.log('Users object store created');
                 }
 
                 // Create Sessions object store
                 if (!this.db.objectStoreNames.contains('sessions')) {
+                    console.log('Creating sessions object store...');
                     const sessionsStore = this.db.createObjectStore('sessions', { 
                         keyPath: 'sessionId' 
                     });
                     sessionsStore.createIndex('userId', 'userId', { unique: false });
                     sessionsStore.createIndex('createdAt', 'createdAt', { unique: false });
+                    console.log('Sessions object store created');
                 }
 
                 // Create User Activity Log
                 if (!this.db.objectStoreNames.contains('userActivity')) {
+                    console.log('Creating userActivity object store...');
                     const activityStore = this.db.createObjectStore('userActivity', { 
                         keyPath: 'id', 
                         autoIncrement: true 
@@ -60,11 +88,27 @@ class EliteFitDB {
                     activityStore.createIndex('userId', 'userId', { unique: false });
                     activityStore.createIndex('action', 'action', { unique: false });
                     activityStore.createIndex('timestamp', 'timestamp', { unique: false });
+                    console.log('UserActivity object store created');
                 }
 
                 console.log('Database setup complete');
             };
         });
+    }
+
+    // Check if database is ready
+    isReady() {
+        return this.isInitialized && this.db !== null;
+    }
+
+    // Get database status
+    getStatus() {
+        return {
+            initialized: this.isInitialized,
+            connected: this.db !== null,
+            dbName: this.dbName,
+            version: this.version
+        };
     }
 
     // Hash password for security
@@ -78,11 +122,15 @@ class EliteFitDB {
 
     // Generate session ID
     generateSessionId() {
-        return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        return 'session_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
     }
 
     // Register new user
     async registerUser(userData) {
+        if (!this.isReady()) {
+            throw new Error('Database not initialized. Please wait and try again.');
+        }
+
         try {
             const hashedPassword = await this.hashPassword(userData.password);
             
@@ -125,6 +173,10 @@ class EliteFitDB {
 
     // Authenticate user
     async authenticateUser(email, password) {
+        if (!this.isReady()) {
+            throw new Error('Database not initialized. Please wait and try again.');
+        }
+
         try {
             const hashedPassword = await this.hashPassword(password);
             
@@ -296,6 +348,10 @@ class EliteFitDB {
 
     // Get all users (for admin/demo purposes)
     async getAllUsers() {
+        if (!this.isReady()) {
+            throw new Error('Database not initialized. Please wait and try again.');
+        }
+
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(['users'], 'readonly');
             const store = transaction.objectStore('users');
