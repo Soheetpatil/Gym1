@@ -387,7 +387,7 @@ async function displayRegisteredUsers() {
         
         usersList.innerHTML = users.map(user => `
             <div class="user-item" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; margin-bottom: 0.5rem; background: white; border-radius: 6px; cursor: pointer; border: 1px solid #e0e0e0; transition: all 0.2s ease;" 
-                 onclick="fillUserCredentials('${user.email}', '${user.fullName}', '${user.membershipType}')"
+                 onclick="fillUserCredentials('${user.email}', '${user.fullName}', '${user.membershipType}', '${getPasswordForEmail(user.email)}')"
                  onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'; this.style.transform='translateY(-1px)'"
                  onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
                 <div>
@@ -397,10 +397,13 @@ async function displayRegisteredUsers() {
                         <i class="fas fa-crown" style="color: #ffd700;"></i> ${user.membershipType ? user.membershipType.charAt(0).toUpperCase() + user.membershipType.slice(1) : 'Basic'} Member
                         ${user.lastLogin ? `• Last login: ${new Date(user.lastLogin).toLocaleDateString()}` : '• Never logged in'}
                     </div>
+                    <div style="font-size: 0.65rem; color: #28a745; margin-top: 3px; font-weight: 500;">
+                        <i class="fas fa-key" style="margin-right: 3px;"></i>Password: ${getPasswordForEmail(user.email)}
+                    </div>
                 </div>
                 <div style="font-size: 0.7rem; color: #999; text-align: right;">
                     <i class="fas fa-mouse-pointer"></i><br>
-                    <span>Click to login</span>
+                    <span>Click for instant login</span>
                 </div>
             </div>
         `).join('');
@@ -428,12 +431,7 @@ async function displayRegisteredUsers() {
 // Helper function to get password for demo accounts
 function getPasswordForEmail(email) {
     const demoPasswords = {
-        'john@demo.com': 'john123',
-        'sarah@demo.com': 'sarah123',
-        'mike@demo.com': 'mike123',
-        'emma@demo.com': 'emma123',
-        'alex@demo.com': 'alex123',
-        'test@demo.com': 'test123'
+        'john@demo.com': 'john123'
     };
     return demoPasswords[email.toLowerCase()] || '';
 }
@@ -513,11 +511,11 @@ window.fillUserCredentials = function(email, fullName, membershipType, password)
     tempMsg.innerHTML = `
         <div style="display: flex; align-items: center; margin-bottom: 4px;">
             <i class="fas fa-check-circle" style="margin-right: 8px; font-size: 1.1rem;"></i> 
-            <strong>Email Selected!</strong>
+            <strong>Ready to Login!</strong>
         </div>
         <div style="font-size: 0.85rem; opacity: 0.9;">
             Logged in as <strong>${fullName}</strong><br>
-            Please enter your password to continue
+            Email & password filled - <strong>Click Sign In!</strong>
         </div>
     `;
     

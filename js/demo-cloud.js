@@ -271,68 +271,34 @@ class DemoCloudDB {
 
     // Force create test users (for debugging)
     async forceCreateTestUsers() {
-        console.log('🔧 Force creating test users...');
+        console.log('🔧 Force creating single premium test user...');
         
         // Clear existing data
         this.resetDemoData();
         
-        const testUsers = [
-            {
-                fullName: 'John Smith',
-                email: 'john@demo.com',
-                password: 'john123',
-                membershipType: 'premium'
-            },
-            {
-                fullName: 'Sarah Johnson',
-                email: 'sarah@demo.com',
-                password: 'sarah123',
-                membershipType: 'basic'
-            },
-            {
-                fullName: 'Mike Wilson',
-                email: 'mike@demo.com',
-                password: 'mike123',
-                membershipType: 'vip'
-            },
-            {
-                fullName: 'Emma Davis',
-                email: 'emma@demo.com',
-                password: 'emma123',
-                membershipType: 'basic'
-            },
-            {
-                fullName: 'Alex Brown',
-                email: 'alex@demo.com',
-                password: 'alex123',
-                membershipType: 'premium'
-            },
-            {
-                fullName: 'Test User',
-                email: 'test@demo.com',
-                password: 'test123',
-                membershipType: 'basic'
-            }
-        ];
+        const testUser = {
+            fullName: 'John Smith',
+            email: 'john@demo.com',
+            password: 'john123',
+            membershipType: 'premium'
+        };
         
-        for (const userData of testUsers) {
-            try {
-                const result = await this.registerUser(userData);
-                if (result.success) {
-                    // Update membership type after creation
-                    const allUsers = this.getCloudUsers();
-                    const userIndex = allUsers.findIndex(u => u.email === userData.email);
-                    if (userIndex !== -1) {
-                        allUsers[userIndex].membershipType = userData.membershipType;
-                        this.saveCloudUsers(allUsers);
-                    }
-                    console.log(`✅ Force created: ${userData.fullName} (${userData.email})`);
-                } else {
-                    console.log(`❌ Failed to force create: ${userData.fullName} - ${result.message}`);
+        try {
+            const result = await this.registerUser(testUser);
+            if (result.success) {
+                // Update membership type after creation
+                const allUsers = this.getCloudUsers();
+                const userIndex = allUsers.findIndex(u => u.email === testUser.email);
+                if (userIndex !== -1) {
+                    allUsers[userIndex].membershipType = testUser.membershipType;
+                    this.saveCloudUsers(allUsers);
                 }
-            } catch (error) {
-                console.error(`Error force creating user ${userData.fullName}:`, error);
+                console.log(`✅ Force created: ${testUser.fullName} (${testUser.email}) - ${testUser.membershipType} member`);
+            } else {
+                console.log(`❌ Failed to force create: ${testUser.fullName} - ${result.message}`);
             }
+        } catch (error) {
+            console.error(`Error force creating user ${testUser.fullName}:`, error);
         }
         
         // Verify creation
@@ -407,10 +373,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Final verification
     const finalUsers = demoCloudDB.getCloudUsers();
     console.log('🎉 Demo initialization complete!');
-    console.log('📋 Available test accounts:');
-    finalUsers.forEach(user => {
+    console.log('📋 Available test account:');
+    if (finalUsers.length > 0) {
+        const user = finalUsers[0];
         console.log(`   • ${user.email} (${user.fullName}) - ${user.membershipType} member`);
-    });
+        console.log('💡 Login with: john@demo.com / john123');
+    } else {
+        console.log('   • No users found');
+    }
     
     // Show status after 2 seconds
     setTimeout(() => {
