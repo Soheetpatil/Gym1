@@ -295,3 +295,108 @@ function hideEmailError() {
         existingError.remove();
     }
 }
+
+// Show animated messages
+function showAnimatedMessage(title, message, type) {
+    // Remove existing message
+    const existingMsg = document.getElementById('animated-message');
+    if (existingMsg) {
+        existingMsg.remove();
+    }
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.id = 'animated-message';
+    
+    const animations = {
+        success: {
+            bg: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+            borderColor: '#38ef7d',
+            animation: 'successBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+        },
+        error: {
+            bg: 'linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%)',
+            borderColor: '#ff4b2b',
+            animation: 'errorShake 0.6s ease-out'
+        },
+        warning: {
+            bg: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            borderColor: '#f5576c',
+            animation: 'warningPulse 0.7s ease-out'
+        }
+    };
+    
+    const style = animations[type] || animations.success;
+    
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: ${style.bg};
+        color: white;
+        padding: 24px 32px;
+        border-radius: 16px;
+        z-index: 10001;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        backdrop-filter: blur(10px);
+        border: 2px solid ${style.borderColor};
+        min-width: 320px;
+        max-width: 90vw;
+        animation: ${style.animation};
+    `;
+    
+    messageDiv.innerHTML = `
+        <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 8px;">
+            ${title}
+        </div>
+        <div style="font-size: 0.95rem; opacity: 0.9; line-height: 1.4;">
+            ${message}
+        </div>
+    `;
+    
+    // Add animation styles if not exists
+    if (!document.getElementById('signup-message-animations')) {
+        const animationStyles = document.createElement('style');
+        animationStyles.id = 'signup-message-animations';
+        animationStyles.textContent = `
+            @keyframes successBounce {
+                0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; }
+                50% { transform: translate(-50%, -50%) scale(1.1) rotate(5deg); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+            }
+            
+            @keyframes errorShake {
+                0%, 100% { transform: translate(-50%, -50%) scale(1); }
+                10%, 30%, 50%, 70%, 90% { transform: translate(-48%, -50%) scale(1); }
+                20%, 40%, 60%, 80% { transform: translate(-52%, -50%) scale(1); }
+            }
+            
+            @keyframes warningPulse {
+                0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+                50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            }
+            
+            @keyframes fadeOut {
+                0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(animationStyles);
+    }
+    
+    document.body.appendChild(messageDiv);
+    
+    // Auto-hide after delay (except for success which redirects)
+    if (type !== 'success') {
+        setTimeout(() => {
+            messageDiv.style.animation = 'fadeOut 0.4s ease-in-out';
+            setTimeout(() => {
+                if (document.body.contains(messageDiv)) {
+                    document.body.removeChild(messageDiv);
+                }
+            }, 400);
+        }, 4000);
+    }
+}
