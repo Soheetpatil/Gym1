@@ -29,6 +29,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         const users = await window.DemoCloudDB.getAllUsers();
         console.log('Available users for login:', users.map(u => ({ email: u.email, name: u.fullName })));
         
+        // Test registered users display
+        setTimeout(() => {
+            const showUsersBtn = document.getElementById('showUsersBtn');
+            if (showUsersBtn) {
+                console.log('Show users button found, testing functionality...');
+                // Auto-click to test (for debugging)
+                // showUsersBtn.click();
+            } else {
+                console.error('Show users button not found!');
+            }
+        }, 3000);
+        
         // Clean expired sessions
         await window.DemoCloudDB.showCrossDeviceStatus();
         
@@ -317,22 +329,56 @@ function setupRegisteredUsers() {
                 this.innerHTML = '<i class="fas fa-users"></i> Show Registered Users';
             } else {
                 this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Users...';
-                await displayRegisteredUsers();
-                registeredUsersSection.style.display = 'block';
-                this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Registered Users';
+                
+                try {
+                    await displayRegisteredUsers();
+                    registeredUsersSection.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Registered Users';
+                } catch (error) {
+                    console.error('Error displaying users:', error);
+                    this.innerHTML = '<i class="fas fa-users"></i> Show Registered Users';
+                    alert('Failed to load users. Please try again.');
+                }
             }
         });
+        
+        // Auto-load users count on page load
+        setTimeout(async () => {
+            if (dbReady) {
+                try {
+                    const users = await window.DemoCloudDB.getAllUsers();
+                    if (users && users.length > 0) {
+                        showUsersBtn.innerHTML = `<i class="fas fa-users"></i> Show Registered Users (${users.length})`;
+                    }
+                } catch (error) {
+                    console.error('Error loading user count:', error);
+                }
+            }
+        }, 1000);
+    } else {
+        console.error('Show users button or section not found');
     }
 }
 
 // Display registered users
 async function displayRegisteredUsers() {
-    if (!dbReady) return;
+    if (!dbReady) {
+        console.log('Database not ready for displaying users');
+        return;
+    }
     
     const usersList = document.getElementById('usersList');
     
     try {
+        console.log('Attempting to load users from DemoCloudDB...');
+        
+        // Check if DemoCloudDB is available
+        if (!window.DemoCloudDB) {
+            throw new Error('DemoCloudDB not available');
+        }
+        
         const users = await window.DemoCloudDB.getAllUsers();
+        console.log('Loaded users:', users);
         
         if (users.length === 0) {
             usersList.innerHTML = '<p style="margin: 0; font-size: 0.85rem; color: #666; text-align: center;">No registered users yet. <a href="signup.html" style="color: var(--primary);">Sign up</a> to create an account!</p>';
@@ -348,7 +394,7 @@ async function displayRegisteredUsers() {
                     <strong style="font-size: 0.9rem; color: var(--primary);">${user.fullName}</strong>
                     <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">${user.email}</div>
                     <div style="font-size: 0.7rem; color: #999; margin-top: 2px;">
-                        <i class="fas fa-crown" style="color: #ffd700;"></i> ${user.membershipType.charAt(0).toUpperCase() + user.membershipType.slice(1)} Member
+                        <i class="fas fa-crown" style="color: #ffd700;"></i> ${user.membershipType ? user.membershipType.charAt(0).toUpperCase() + user.membershipType.slice(1) : 'Basic'} Member
                         ${user.lastLogin ? `• Last login: ${new Date(user.lastLogin).toLocaleDateString()}` : '• Never logged in'}
                     </div>
                 </div>
@@ -358,9 +404,24 @@ async function displayRegisteredUsers() {
                 </div>
             </div>
         `).join('');
+        
+        console.log('✅ Users displayed successfully');
+        
     } catch (error) {
         console.error('Error loading users:', error);
-        usersList.innerHTML = '<p style="margin: 0; font-size: 0.85rem; color: #dc3545; text-align: center;">Error loading users. Please try again.</p>';
+        usersList.innerHTML = `
+            <div style="text-align: center; padding: 1rem;">
+                <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; color: #dc3545;">
+                    <i class="fas fa-exclamation-triangle"></i> Error loading users
+                </p>
+                <p style="margin: 0; font-size: 0.75rem; color: #666;">
+                    ${error.message}
+                </p>
+                <button onclick="location.reload()" style="margin-top: 0.5rem; padding: 0.25rem 0.75rem; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">
+                    Refresh Page
+                </button>
+            </div>
+        `;
     }
 }
 

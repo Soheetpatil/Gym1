@@ -261,6 +261,94 @@ class DemoCloudDB {
     isReady() {
         return true;
     }
+
+    // Reset demo data (for testing purposes)
+    resetDemoData() {
+        localStorage.removeItem(this.storageKey);
+        localStorage.removeItem(this.syncKey);
+        console.log('🔄 Demo data reset - fresh start!');
+    }
+
+    // Force create test users (for debugging)
+    async forceCreateTestUsers() {
+        console.log('🔧 Force creating test users...');
+        
+        // Clear existing data
+        this.resetDemoData();
+        
+        const testUsers = [
+            {
+                fullName: 'John Smith',
+                email: 'john@demo.com',
+                password: 'john123',
+                membershipType: 'premium'
+            },
+            {
+                fullName: 'Sarah Johnson',
+                email: 'sarah@demo.com',
+                password: 'sarah123',
+                membershipType: 'basic'
+            },
+            {
+                fullName: 'Mike Wilson',
+                email: 'mike@demo.com',
+                password: 'mike123',
+                membershipType: 'vip'
+            },
+            {
+                fullName: 'Emma Davis',
+                email: 'emma@demo.com',
+                password: 'emma123',
+                membershipType: 'basic'
+            },
+            {
+                fullName: 'Alex Brown',
+                email: 'alex@demo.com',
+                password: 'alex123',
+                membershipType: 'premium'
+            },
+            {
+                fullName: 'Test User',
+                email: 'test@demo.com',
+                password: 'test123',
+                membershipType: 'basic'
+            }
+        ];
+        
+        for (const userData of testUsers) {
+            try {
+                const result = await this.registerUser(userData);
+                if (result.success) {
+                    // Update membership type after creation
+                    const allUsers = this.getCloudUsers();
+                    const userIndex = allUsers.findIndex(u => u.email === userData.email);
+                    if (userIndex !== -1) {
+                        allUsers[userIndex].membershipType = userData.membershipType;
+                        this.saveCloudUsers(allUsers);
+                    }
+                    console.log(`✅ Force created: ${userData.fullName} (${userData.email})`);
+                } else {
+                    console.log(`❌ Failed to force create: ${userData.fullName} - ${result.message}`);
+                }
+            } catch (error) {
+                console.error(`Error force creating user ${userData.fullName}:`, error);
+            }
+        }
+        
+        // Verify creation
+        const finalUsers = this.getCloudUsers();
+        console.log(`🎉 Force creation complete! Total users: ${finalUsers.length}`);
+        
+        // Test authentication
+        try {
+            const testAuth = await this.authenticateUser('john@demo.com', 'john123');
+            console.log('John authentication test:', testAuth);
+        } catch (error) {
+            console.error('John authentication test failed:', error);
+        }
+        
+        return finalUsers;
+    }
 }
 
 // Initialize demo cloud database
@@ -269,14 +357,53 @@ const demoCloudDB = new DemoCloudDB();
 // Export for use
 window.DemoCloudDB = demoCloudDB;
 
+// Add global reset function for debugging
+window.resetDemoUsers = async function() {
+    console.log('🔄 Manually resetting demo users...');
+    await demoCloudDB.forceCreateTestUsers();
+    console.log('✅ Demo users reset complete! Try logging in now.');
+};
+
+// Add global function to check users
+window.checkDemoUsers = function() {
+    const users = demoCloudDB.getCloudUsers();
+    console.log('📋 Current demo users:', users);
+    console.log('📊 Total users:', users.length);
+    users.forEach(user => {
+        console.log(`   • ${user.fullName} (${user.email}) - ${user.membershipType}`);
+    });
+    return users;
+};
+
 // Auto-initialize
 document.addEventListener('DOMContentLoaded', async () => {
     await demoCloudDB.init();
     
-    // Create test users if none exist
+    // Check if we need to reset demo data (for development)
     const users = demoCloudDB.getCloudUsers();
-    if (users.length === 0) {
-        console.log('🔧 Creating test users for demo...');
+    let needsReset = false;
+    
+    // Check if test user exists and can authenticate
+    if (users.length > 0) {
+        try {
+            const testAuth = await demoCloudDB.authenticateUser('test@demo.com', 'test123');
+            if (!testAuth.success && testAuth.message.includes('User not found')) {
+                needsReset = true;
+                console.log('🔄 Test user not found, resetting demo data...');
+            }
+        } catch (error) {
+            needsReset = true;
+            console.log('🔄 Authentication test failed, resetting demo data...');
+        }
+    }
+    
+    // Reset if needed or if no users exist
+    if (needsReset || users.length === 0) {
+        if (needsReset) {
+            demoCloudDB.resetDemoData();
+        }
+        
+        console.log('🔧 Creating fresh test users for demo...');
         
         const testUsers = [
             {
@@ -347,6 +474,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('   • emma@demo.com / emma123 (Basic Member)');
         console.log('   • alex@demo.com / alex123 (Premium Member)');
         console.log('   • test@demo.com / test123 (Basic Member)');
+        
+        // Test authentication to make sure it works
+        try {
+            const testAuth = await demoCloudDB.authenticateUser('test@demo.com', 'test123');
+            if (testAuth.success) {
+                console.log('✅ Test authentication successful!');
+            } else {
+                console.error('❌ Test authentication failed:', testAuth.message);
+            }
+        } catch (error) {
+            console.error('❌ Test authentication error:', error);
+        }
     }
     
     // Show status after 2 seconds
