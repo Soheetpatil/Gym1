@@ -32,7 +32,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>Welcome Back to EliteFit!</h1>
+            <h1 id="welcomeMessage">Welcome Back to EliteFit!</h1>
             <p>Continue your fitness journey with our state-of-the-art equipment, expert trainers, and motivating atmosphere.</p>
             <div class="hero-buttons">
                 <a href="membership.html" class="btn">Upgrade Plan</a>
@@ -199,6 +199,13 @@
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             if (!isLoggedIn) {
                 window.location.href = 'login.html';
+            } else {
+                // Personalize welcome message
+                const userName = localStorage.getItem('userName') || 'User';
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                if (welcomeMessage) {
+                    welcomeMessage.textContent = `Welcome Back, ${userName}!`;
+                }
             }
         });
 

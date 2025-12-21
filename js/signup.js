@@ -49,11 +49,33 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Simulate API call
             setTimeout(() => {
-                // In a real app, you would send this to your server
-                console.log('Signup attempt:', { fullName, email, password });
+                // Store user credentials in localStorage (in real app, send to server)
+                const storedUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+                
+                // Check if email already exists
+                const existingUser = storedUsers.find(u => u.email === email);
+                if (existingUser) {
+                    alert('Email already registered. Please use a different email or login with existing account.');
+                    signupBtn.innerHTML = originalText;
+                    signupBtn.disabled = false;
+                    return;
+                }
+                
+                // Add new user
+                const newUser = {
+                    fullName,
+                    email,
+                    password,
+                    registrationDate: new Date().toISOString()
+                };
+                
+                storedUsers.push(newUser);
+                localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+                
+                console.log('Signup successful:', { fullName, email });
                 
                 // Simulate successful signup
-                alert('Account created successfully! Please check your email for verification.');
+                alert(`Account created successfully for ${fullName}! You can now login with your credentials.`);
                 
                 // Reset button
                 signupBtn.innerHTML = originalText;
