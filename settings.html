@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | EliteFit Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="home.html" class="logo">Elite<span>Fit</span> Gym</a>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="trainers.html">Trainers</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" class="logout-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <button class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="settings-container" style="min-height: 100vh; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 100px 0 50px;">
+        <div class="container">
+            <div class="settings-header" style="text-align: center; margin-bottom: 3rem;">
+                <div style="display: inline-block; padding: 20px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 50%; margin-bottom: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <i class="fas fa-user-cog" style="font-size: 2.5rem; color: white;"></i>
+                </div>
+                <h1 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 2.8rem; font-weight: 700;">
+                    Account Settings
+                </h1>
+                <p style="color: var(--accent); font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Manage your EliteFit account preferences and security settings</p>
+            </div>
+
+            <div class="settings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
+                
+                <!-- User Profile Card -->
+                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--primary);">Profile Information</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;" id="userEmail">Loading...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
+                                <i class="fas fa-user"></i> Full Name
+                            </label>
+                            <p id="userName" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
+                                <i class="fas fa-crown"></i> Membership Type
+                            </label>
+                            <p id="membershipType" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent); text-transform: capitalize;">Loading...</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
+                                <i class="fas fa-calendar-alt"></i> Member Since
+                            </label>
+                            <p id="memberSince" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
+                                <i class="fas fa-clock"></i> Last Login
+                            </label>
+                            <p id="lastLogin" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Change Password Card -->
+                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--primary);">Change Password</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Update your account password</p>
+                        </div>
+                    </div>
+                    
+                    <form id="changePasswordForm">
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="currentPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Current Password</label>
+                            <div class="input-container">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('currentPassword', 'currentToggle')">
+                                    <i class="fas fa-eye" id="currentToggle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="newPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">New Password</label>
+                            <div class="input-container">
+                                <i class="fas fa-key"></i>
+                                <input type="password" id="newPassword" placeholder="Enter new password" required>
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('newPassword', 'newToggle')">
+                                    <i class="fas fa-eye" id="newToggle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="confirmNewPassword" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Confirm New Password</label>
+                            <div class="input-container">
+                                <i class="fas fa-check"></i>
+                                <input type="password" id="confirmNewPassword" placeholder="Confirm new password" required>
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirmNewPassword', 'confirmToggle')">
+                                    <i class="fas fa-eye" id="confirmToggle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border: none;">
+                            <i class="fas fa-save"></i> Update Password
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Account Actions Card -->
+                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--primary);">Account Actions</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Manage your account</p>
+                        </div>
+                    </div>
+                    
+                    <div class="account-actions">
+                        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #856404; display: flex; align-items: center;">
+                                <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                                Account Information
+                            </h4>
+                            <p style="margin: 0; color: #856404; font-size: 0.9rem;">
+                                Your account data is stored securely. You can change your password or delete your account at any time.
+                            </p>
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <button type="button" class="btn btn-secondary" onclick="exportAccountData()" style="width: 100%; margin-bottom: 0.5rem;">
+                                <i class="fas fa-download"></i> Export Account Data
+                            </button>
+                            <p style="margin: 0; font-size: 0.8rem; color: var(--accent); text-align: center;">Download your account information</p>
+                        </div>
+                        
+                        <div style="border-top: 2px solid var(--light); padding-top: 1.5rem;">
+                            <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #721c24; display: flex; align-items: center;">
+                                    <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+                                    Danger Zone
+                                </h4>
+                                <p style="margin: 0; color: #721c24; font-size: 0.9rem;">
+                                    Once you delete your account, there is no going back. Please be certain.
+                                </p>
+                            </div>
+                            
+                            <button type="button" class="btn" onclick="confirmDeleteAccount()" style="width: 100%; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none;">
+                                <i class="fas fa-trash-alt"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Device Information Card -->
+                <div class="settings-card" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+                    <div class="card-header" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light);">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 1rem;">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--primary);">Device Information</h3>
+                            <p style="margin: 0; color: var(--accent); font-size: 0.9rem;">Cross-device login status</p>
+                        </div>
+                    </div>
+                    
+                    <div class="device-info">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
+                                <i class="fas fa-desktop"></i> Current Device
+                            </label>
+                            <p id="currentDevice" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent); font-size: 0.85rem;">Loading...</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">
+                                <i class="fas fa-globe"></i> Platform
+                            </label>
+                            <p id="currentPlatform" style="margin: 0; padding: 0.75rem; background: var(--light); border-radius: 6px; color: var(--accent);">Loading...</p>
+                        </div>
+                        
+                        <div style="background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 8px; padding: 1rem;">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #0c5460; display: flex; align-items: center;">
+                                <i class="fas fa-cloud" style="margin-right: 0.5rem;"></i>
+                                Cross-Device Login
+                            </h4>
+                            <p style="margin: 0; color: #0c5460; font-size: 0.9rem;">
+                                Your account works across all devices. Login with the same email and password from any device.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EliteFit Gym</h3>
+                    <p>Transform your body and mind with our state-of-the-art facilities, expert trainers, and supportive community.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, Health City</li>
+                        <li><i class="fas fa-phone-alt"></i> +91 9798990420</li>
+                        <li><i class="fas fa-envelope"></i> soheetp@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Sun: 5:00 AM - 11:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 EliteFit Gym. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/demo-cloud.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
