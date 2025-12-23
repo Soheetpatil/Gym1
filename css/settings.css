@@ -113,23 +113,28 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .input-container i {
     position: absolute;
     left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
     color: var(--accent);
     z-index: 2;
+    font-size: 1rem;
 }
 
 .input-container input {
     width: 100%;
-    padding: 12px 15px 12px 45px;
+    padding: 15px 50px 15px 45px; /* Added right padding for eye icon */
     border: 2px solid #e1e5e9;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background: white;
+    box-sizing: border-box;
 }
 
 .input-container input:focus {
@@ -141,16 +146,32 @@ body {
 .toggle-password {
     position: absolute;
     right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--accent);
     cursor: pointer;
-    padding: 5px;
-    z-index: 2;
+    padding: 8px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .toggle-password:hover {
     color: var(--primary);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.toggle-password i {
+    font-size: 1rem;
+    position: static;
+    transform: none;
 }
 
 /* Profile Info Styles */
@@ -265,6 +286,28 @@ body {
     
     .settings-header {
         margin-bottom: 2rem;
+    }
+    
+    /* Mobile-specific input and eye icon fixes */
+    .input-container input {
+        padding: 16px 50px 16px 45px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .toggle-password {
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        padding: 10px;
+    }
+    
+    .toggle-password i {
+        font-size: 1.1rem;
+    }
+    
+    .input-container i {
+        left: 12px;
+        font-size: 1.1rem;
     }
 }
 
@@ -474,4 +517,58 @@ header {
 footer {
     position: relative;
     z-index: 50;
+}
+/* Enhanced Eye Icon Styling */
+.toggle-password {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.toggle-password:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.toggle-password:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Ensure eye icons are perfectly centered */
+.input-container .fas.fa-eye,
+.input-container .fas.fa-eye-slash {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fix for any potential icon alignment issues */
+.toggle-password .fas {
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* Additional hover effects for better UX */
+.input-container:hover .toggle-password {
+    color: var(--primary);
+}
+
+.input-container input:focus + .toggle-password,
+.input-container input:focus ~ .toggle-password {
+    color: var(--primary);
+}
+
+/* Ensure proper spacing and alignment */
+.form-group .input-container {
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Fix for password field styling consistency */
+.input-container input[type="password"],
+.input-container input[type="text"] {
+    padding-right: 50px !important;
 }
