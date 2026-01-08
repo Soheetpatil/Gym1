@@ -478,10 +478,15 @@ window.proceedWithDeletion = async function() {
     }
 };
 
-// Toggle password visibility
+// Toggle password visibility with animation
 function togglePasswordVisibility(inputId, iconId) {
     const input = document.getElementById(inputId);
     const icon = document.getElementById(iconId);
+    
+    // Add animation
+    if (window.animateEyeToggle) {
+        window.animateEyeToggle(icon);
+    }
     
     if (input.type === 'password') {
         input.type = 'text';

@@ -572,3 +572,354 @@ footer {
 .input-container input[type="text"] {
     padding-right: 50px !important;
 }
+/* Enhanced Animations for Settings Page */
+
+/* Eye icon toggle animation */
+.toggle-password i {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toggle-password i.fa-eye-slash {
+    animation: eyeToggle 0.4s ease-in-out;
+}
+
+.toggle-password i.fa-eye {
+    animation: eyeToggleReverse 0.4s ease-in-out;
+}
+
+@keyframes eyeToggle {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(0.8) rotate(180deg); opacity: 0.5; }
+    100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+@keyframes eyeToggleReverse {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(0.8) rotate(-180deg); opacity: 0.5; }
+    100% { transform: scale(1) rotate(-360deg); opacity: 1; }
+}
+
+/* Settings cards entrance animation */
+.settings-card {
+    animation: cardSlideIn 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.settings-card:nth-child(1) { animation-delay: 0.1s; }
+.settings-card:nth-child(2) { animation-delay: 0.2s; }
+.settings-card:nth-child(3) { animation-delay: 0.3s; }
+.settings-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Settings header animation */
+.settings-header {
+    animation: headerFadeIn 0.8s ease-out;
+}
+
+@keyframes headerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icon circle pulse animation */
+.settings-header > div {
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Button click animation */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn:active {
+    animation: buttonPress 0.2s ease-in-out;
+}
+
+@keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+/* Ripple effect for buttons */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Input focus animation */
+.input-container input:focus {
+    animation: inputGlow 0.6s ease-out;
+}
+
+@keyframes inputGlow {
+    0% { 
+        box-shadow: 0 0 0 0px rgba(0,0,0,0.1);
+    }
+    50% { 
+        box-shadow: 0 0 0 5px rgba(0,0,0,0.1);
+    }
+    100% { 
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+    }
+}
+
+/* Form group stagger animation */
+.form-group {
+    animation: formSlideIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Profile info animation */
+.profile-info > div {
+    animation: profileItemSlide 0.4s ease-out;
+    animation-fill-mode: both;
+}
+
+.profile-info > div:nth-child(1) { animation-delay: 0.1s; }
+.profile-info > div:nth-child(2) { animation-delay: 0.2s; }
+.profile-info > div:nth-child(3) { animation-delay: 0.3s; }
+.profile-info > div:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes profileItemSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Card header icon animation */
+.card-header > div {
+    animation: iconRotate 0.6s ease-out;
+}
+
+@keyframes iconRotate {
+    from {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Success/Error message animations */
+.settings-message {
+    animation: messageSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* Delete confirmation modal animation */
+#delete-confirmation-modal {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+#delete-confirmation-modal > div {
+    animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Scroll to top button animation */
+.scroll-to-top {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.scroll-to-top:hover {
+    animation: scrollButtonBounce 0.6s ease-in-out;
+}
+
+@keyframes scrollButtonBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(-3px);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Loading state animation */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.3; }
+}
+
+/* Hover animations for interactive elements */
+.settings-card:hover {
+    animation: cardHover 0.3s ease-out;
+}
+
+@keyframes cardHover {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+/* Footer slide-up animation */
+footer {
+    animation: footerSlideUp 0.8s ease-out;
+}
+
+@keyframes footerSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Social links hover animation */
+footer .social-links a {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+footer .social-links a:hover {
+    animation: socialBounce 0.6s ease-in-out;
+}
+
+@keyframes socialBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(-2px);
+    }
+    40% {
+        transform: translateY(-8px) rotate(5deg);
+    }
+    60% {
+        transform: translateY(-4px) rotate(-5deg);
+    }
+}
+
+/* Typing animation for loading text */
+.typing-animation {
+    overflow: hidden;
+    border-right: 2px solid var(--primary);
+    white-space: nowrap;
+    animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary); }
+}
+
+/* Shake animation for validation errors */
+.shake-error {
+    animation: shakeError 0.6s ease-in-out;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Gradient animation for backgrounds */
+.gradient-animation {
+    background: linear-gradient(-45deg, #f8f9fa, #e9ecef, #dee2e6, #ced4da);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

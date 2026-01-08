@@ -578,10 +578,15 @@ async function loadRegisteredUsersCount() {
     }
 }
 
-// Toggle password visibility
+// Toggle password visibility with animation
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const toggleIcon = document.getElementById('toggleIcon');
+    
+    // Add animation
+    if (window.animateEyeToggle) {
+        window.animateEyeToggle(toggleIcon);
+    }
     
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
