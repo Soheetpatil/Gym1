@@ -152,7 +152,7 @@ function showDatabaseStatus(message, type) {
                 50% { transform: translateX(-50%) translateY(5px) scale(1.1) rotate(5deg); opacity: 1; }
                 100% { transform: translateX(-50%) translateY(0) scale(1) rotate(0deg); opacity: 1; }
             }
-            
+
             @keyframes slideInShake {
                 0% { transform: translateX(-50%) translateY(-100px); opacity: 0; }
                 50% { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -163,10 +163,7 @@ function showDatabaseStatus(message, type) {
                 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
             }
             
-            @keyframes pulse {
-                0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-                50% { box-shadow: 0 6px 30px rgba(102, 126, 234, 0.4); }
-            }
+
             
             @keyframes successGlow {
                 0% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
