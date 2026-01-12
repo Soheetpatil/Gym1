@@ -353,7 +353,7 @@ class EliteFitDB {
         }
 
         return new Promise((resolve, reject) => {
-            const transaction = this.db.transaction(['users'], 'users');
+            const transaction = this.db.transaction(['users'], 'readonly');
             const store = transaction.objectStore('users');
             const request = store.getAll();
 
@@ -383,7 +383,7 @@ class EliteFitDB {
             action: action,
             details: details,
             timestamp: new Date().toISOString(),
-            ipAddress: 'www.', // In real app, get actual IP
+            ipAddress: 'localhost', // In real app, get actual IP
             userAgent: navigator.userAgent
         };
 
