@@ -170,7 +170,7 @@ function showDatabaseStatus(message, type) {
             
             @keyframes successGlow {
                 0% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-                50% { box-shadow: 0 8px 40px rgba(17, 153, 142, 0.6), 0 0 20px rgba(56, 239, 125, 0.3); }
+                50% { box-shadow: 0 8px 40px rgba(41, 222, 207, 0.6), 0 0 20px rgba(48, 238, 121, 0.3); }
                 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
             }
             
@@ -187,7 +187,7 @@ function showDatabaseStatus(message, type) {
         `;
         document.head.appendChild(animationStyles);
     }
-    
+
     statusDiv.style.background = style.bg;
     statusDiv.style.color = style.color;
     statusDiv.style.animation = style.animation;
@@ -196,7 +196,7 @@ function showDatabaseStatus(message, type) {
     statusDiv.style.transform = 'translateX(-50%) translateY(0)';
 }
 
-// Hide database status with animation
+
 function hideDatabaseStatus() {
     const statusDiv = document.getElementById('db-status');
     if (statusDiv) {
@@ -574,7 +574,7 @@ async function loadRegisteredUsersCount() {
             showUsersBtn.innerHTML = `<i class="fas fa-users"></i> Show Registered Users (${users.length})`;
         }
     } catch (error) {
-        console.error('Error loading user count:', error);
+        console.error('Error loading user memory:', error);
     }
 }
 
