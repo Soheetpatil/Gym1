@@ -351,7 +351,7 @@ function setupRegisteredUsers() {
                         showUsersBtn.innerHTML = `<i class="fas fa-users"></i> Show Registered Users (${users.length})`;
                     }
                 } catch (error) {
-                    console.error('Error loading user count:', error);
+                    console.error('Error loading user memory:', error);
                 }
             }
         }, 1000);
@@ -574,7 +574,7 @@ async function loadRegisteredUsersCount() {
             showUsersBtn.innerHTML = `<i class="fas fa-users"></i> Show Registered Users (${users.length})`;
         }
     } catch (error) {
-        console.error('Error loading user count:', error);
+        console.error('Error loading user memory:', error);
     }
 }
 
